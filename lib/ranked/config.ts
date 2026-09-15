@@ -26,6 +26,20 @@ export function coverPrompt(title: string): string {
 }
 
 /**
+ * Manual cover overrides for Ranked posts.
+ * Prefer local /images/blog assets. Do not fs.stat public/ — that packs
+ * images into the cron bundle.
+ */
+export const COMMITTED_COVER_BY_SLUG: Readonly<
+  Record<string, { src: string; alt: string }>
+> = {
+  'diversified-chiropractic-vs-gentle-techniques-for-back-stiffness': {
+    src: '/images/blog/diversified-chiro.png',
+    alt: 'Chiropractor performing a diversified spinal adjustment on a patient at Aligned Health in Laguna Hills',
+  },
+}
+
+/**
  * Slugs that already have a committed file at /images/blog/covers/{slug}.png
  * List only. Do not fs.stat public/ — that packs images into the cron bundle.
  */

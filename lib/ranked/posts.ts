@@ -1,5 +1,5 @@
 import { getRankedContentDetail, listRankedContent } from './client'
-import { ensureUniqueCoverImages, getRankedCoverImage } from './cover'
+import { ensureUniqueCoverImages, committedCoverAlt, getRankedCoverImage } from './cover'
 import { fetchGoogleDocHtml } from './google-doc'
 import {
   ensureUniquePublishDates,
@@ -116,7 +116,7 @@ export async function getLiveRankedBlogPosts(
         generate: Boolean(opts.generateCovers) || opts.generateForSlug === slug,
         reservedUrls: reservedCovers,
       })
-      post.coverAlt = `${source.title} cover`
+      post.coverAlt = committedCoverAlt(slug) ?? `${source.title} cover`
       posts.push(post)
       taken.add(slug)
     }

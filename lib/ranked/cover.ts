@@ -1,5 +1,5 @@
 import { BlobNotFoundError, head, put } from '@vercel/blob'
-import { COMMITTED_COVER_SLUGS, coverPrompt } from './config'
+import { COMMITTED_COVER_BY_SLUG, COMMITTED_COVER_SLUGS, coverPrompt } from './config'
 
 const TOPIC_COVERS: Record<string, readonly string[]> = {
   sciatica: [
@@ -107,7 +107,13 @@ function coverJpgPath(contentId: string): string {
 
 function committedCoverUrl(slug?: string): string | null {
   if (!slug) return null
+  if (COMMITTED_COVER_BY_SLUG[slug]) return COMMITTED_COVER_BY_SLUG[slug].src
   return COMMITTED_COVER_SLUGS.includes(slug) ? `/images/blog/covers/${slug}.png` : null
+}
+
+export function committedCoverAlt(slug?: string): string | null {
+  if (!slug) return null
+  return COMMITTED_COVER_BY_SLUG[slug]?.alt ?? null
 }
 
 function hashSlug(slug: string): number {
