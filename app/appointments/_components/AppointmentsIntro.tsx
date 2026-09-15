@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion, useReducedMotion, type Variants } from "motion/react";
 import { useBookingModal } from "@/app/_components/booking/BookingModalContext";
+import { EXISTING_PATIENT_SCHEDULER_URL } from "@/lib/site";
 import {
   SERVICES,
   ServiceCard,
@@ -16,9 +17,6 @@ import {
  * 2. Linen section: the Jane App existing-patients scheduler embedded
  * directly on the page, no intermediate form/modal for this flow.
  */
-
-const EXISTING_PATIENT_SCHEDULER_URL =
- "https://alignedhealthoc.janeapp.com/#/existing-patients";
 
 export function AppointmentsIntro() {
  const reduce = useReducedMotion();
