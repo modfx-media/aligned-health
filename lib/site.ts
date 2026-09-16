@@ -27,6 +27,14 @@ export const CLINIC = {
 } as const;
 
 /**
+ * Jane App scheduler for returning patients, who book directly without the
+ * lead-capture form new patients go through. Used by the home hero, the
+ * footer, and the /appointments page.
+ */
+export const EXISTING_PATIENT_SCHEDULER_URL =
+  "https://alignedhealthoc.janeapp.com/#/existing-patients";
+
+/**
  * Canonical route slugs. The order here also drives the sitemap ordering.
  * The homepage lives at `/` (site root); no separate `/home` alias.
  */
