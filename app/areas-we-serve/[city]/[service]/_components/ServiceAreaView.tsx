@@ -178,6 +178,9 @@ export function ServiceAreaView({
             <p className="mt-6 max-w-xl text-base leading-relaxed text-linen md:text-lg">
               {content.intro}
             </p>
+            <p className="mt-4 max-w-xl text-sm leading-relaxed text-linen/80 md:text-base">
+              {content.localStory}
+            </p>
             <div className="mt-10">
               <BookNowLink className="btn-primary inline-flex items-center gap-2">
                 Book your New Patient Appointment
@@ -203,6 +206,9 @@ export function ServiceAreaView({
           />
           <div className="mx-auto mt-12 max-w-3xl divide-y divide-tan/25 rounded-3xl border border-tan/25 bg-linen">
             <FaqRow q={content.localFaq.q} a={content.localFaq.a} />
+            {content.extraFaqs.map((f) => (
+              <FaqRow key={f.q} q={f.q} a={f.a} />
+            ))}
             {service.faqs.slice(0, 2).map((f, i) => (
               <FaqRow
                 key={i}

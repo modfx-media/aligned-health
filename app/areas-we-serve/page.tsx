@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import { ClinicJsonLd } from "@/app/_components/ClinicJsonLd";
+import { PageChromeJsonLd } from "@/app/_components/ClinicJsonLd";
 import { AreasHubView } from "./_components/AreasHubView";
 import { LOCATIONS } from "@/lib/locations";
 import { SITE_URL } from "@/lib/site";
 
 const PATH = "/areas-we-serve";
 
-const TITLE = "Areas We Serve · Orange County Chiropractic Care · Aligned Health";
+const TITLE = "Areas We Serve · Chiropractor for Orange County · Aligned Health";
 const DESCRIPTION =
-  "Aligned Health serves patients across 30 Orange County cities from our Laguna Hills office with chiropractic adjustments, spinal decompression, and more.";
+  "One Laguna Hills office, patients from 30 Orange County cities. Drive times, local FAQs, and every service we offer — from Irvine to San Clemente.";
 
 export const metadata: Metadata = {
   title: { absolute: TITLE },
@@ -50,7 +50,7 @@ export default function AreasWeServePage() {
 
   return (
     <>
-      <ClinicJsonLd pagePath={PATH} />
+      <PageChromeJsonLd path={PATH} name={TITLE} description={DESCRIPTION} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}

@@ -31,7 +31,9 @@ import { CLINIC } from "@/lib/site";
  * - Magnetic gift-card CTA
  */
 
-const GIFT_CARD_URL = "https://asapchiro.janeapp.com/online_gift_cards/new";
+import { JANEAPP_GIFT_CARD_URL } from "@/lib/site";
+
+const GIFT_CARD_URL = JANEAPP_GIFT_CARD_URL;
 const PHONE_TEL = CLINIC.phone.replace(/[^\d+]/g, "");
 const BG_IMAGE =
  "https://images.squarespace-cdn.com/content/v1/5ee5219c63842071d176def5/13a8a82a-4f38-4686-997f-57d70e3e14b1/IMG_7513.jpeg";

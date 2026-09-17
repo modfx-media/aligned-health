@@ -93,6 +93,9 @@ export function CityAreaView({
             {location.neighborhood} area regularly build Aligned Health into
             their regular care routine, not just a one-time visit.
           </p>
+          <p className="mt-5 max-w-2xl text-sm leading-relaxed text-mocha md:text-base">
+            {content.localStory}
+          </p>
         </div>
       </section>
 
@@ -148,18 +151,22 @@ export function CityAreaView({
       <section className="section-cream section relative overflow-hidden">
         <div className="container-shell relative z-10">
           <div className="mx-auto max-w-3xl text-center">
-            <p className="eyebrow">Common question</p>
+            <p className="eyebrow">Common questions</p>
             <h2 className="heading-section mt-4">
               {location.name} <span className="italic text-tan">patients ask.</span>
             </h2>
           </div>
-          <div className="mx-auto mt-10 max-w-3xl rounded-3xl border border-tan/25 bg-linen p-6 md:p-7">
-            <p className="font-serif text-lg text-espresso md:text-xl">
-              {content.localFaq.q}
-            </p>
-            <p className="mt-4 text-sm leading-relaxed text-mocha md:text-base">
-              {content.localFaq.a}
-            </p>
+          <div className="mx-auto mt-10 max-w-3xl divide-y divide-tan/25 rounded-3xl border border-tan/25 bg-linen">
+            {[content.localFaq, ...content.extraFaqs].map((faq) => (
+              <div key={faq.q} className="p-6 md:p-7">
+                <p className="font-serif text-lg text-espresso md:text-xl">
+                  {faq.q}
+                </p>
+                <p className="mt-4 text-sm leading-relaxed text-mocha md:text-base">
+                  {faq.a}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>

@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ClinicJsonLd } from "@/app/_components/ClinicJsonLd";
+import { PageChromeJsonLd } from "@/app/_components/ClinicJsonLd";
 import { CityAreaView } from "./_components/CityAreaView";
 import { SERVICES } from "@/lib/services";
 import { getAllLocationSlugs, getLocationBySlug } from "@/lib/locations";
 import { buildCityOverview } from "@/lib/serviceAreas";
-import { SITE_URL } from "@/lib/site";
 
 /**
  * /areas-we-serve/[city], one landing page per served city (30 total).
@@ -31,7 +30,9 @@ export async function generateMetadata({
 
   const url = `/areas-we-serve/${location.slug}`;
   const title = `Chiropractor in ${location.name}, CA \u00b7 Aligned Health`;
-  const description = `Chiropractic adjustments, spinal decompression, and 12 other recovery services for ${location.name}, CA patients at Aligned Health in Laguna Hills. Schedule now, most PPO plans accepted.`;
+  const description = location.home
+    ? `Laguna Hills chiropractic care with Dr. Dustin Hack and Dr. Tara Hadden. One-on-one visits, spinal decompression, and most PPO plans verified before you book.`
+    : `Chiropractor for ${location.name} patients at our Laguna Hills office. Drive is about ${location.driveMinutes} minutes via ${location.freeway}. Most PPO plans accepted.`;
   const image = "/images/about/about-hero-office.jpg";
 
   return {
@@ -44,7 +45,12 @@ export async function generateMetadata({
       title,
       description,
       images: [
-        { url: image, width: 768, height: 1024, alt: "Aligned Health interior office in Laguna Hills" },
+        {
+          url: image,
+          width: 768,
+          height: 1024,
+          alt: "Aligned Health interior office in Laguna Hills",
+        },
       ],
     },
     twitter: {
@@ -62,39 +68,31 @@ export default async function CityAreaPage({ params }: PageProps) {
   if (!location) notFound();
 
   const content = buildCityOverview(location);
-  const url = `${SITE_URL}/areas-we-serve/${location.slug}`;
-
-  const breadcrumbJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Areas We Serve", item: `${SITE_URL}/areas-we-serve` },
-      { "@type": "ListItem", position: 2, name: location.name, item: url },
-    ],
-  };
+  const path = `/areas-we-serve/${location.slug}`;
+  const title = `Chiropractor in ${location.name}, CA`;
+  const faqs = [content.localFaq, ...content.extraFaqs];
 
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: [
-      {
-        "@type": "Question",
-        name: content.localFaq.q,
-        acceptedAnswer: { "@type": "Answer", text: content.localFaq.a },
-      },
-    ],
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.q,
+      acceptedAnswer: { "@type": "Answer", text: faq.a },
+    })),
   };
 
   return (
     <>
-      <ClinicJsonLd
-        pagePath={`/areas-we-serve/${location.slug}`}
-        areaServedName={location.name}
-        areaServedSameAs={`https://en.wikipedia.org/wiki/${location.wikipediaSlug}`}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      <PageChromeJsonLd
+        path={path}
+        name={title}
+        description={content.intro}
+        crumbs={[
+          { name: "Home", path: "/" },
+          { name: "Areas We Serve", path: "/areas-we-serve" },
+          { name: location.name, path },
+        ]}
       />
       <script
         type="application/ld+json"

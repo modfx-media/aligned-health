@@ -9,7 +9,7 @@ import {
  type Variants,
 } from "motion/react";
 import { useRef } from "react";
-import { CLINIC } from "@/lib/site";
+import { CLINIC, MAPS_URL } from "@/lib/site";
 import { EmailLink } from "@/app/_components/EmailLink";
 import { BookNowLink } from "@/app/_components/BookNowLink";
 import { LeadConnectorForm } from "@/app/_components/LeadConnectorForm";
@@ -30,9 +30,7 @@ import { LeadConnectorForm } from "@/app/_components/LeadConnectorForm";
 const HERO_PHOTO = "/images/contact-us/hero-v2.jpg";
 
 const PHONE_TEL = CLINIC.phone.replace(/[^\d+]/g, "");
-const FULL_ADDRESS = `${CLINIC.address.street}, ${CLINIC.address.city}, ${CLINIC.address.region} ${CLINIC.address.postalCode}`;
-const MAP_LINK =
- "https://www.google.com/maps/place/Aligned+Health/@33.5748115,-117.6755535,871m/data=!3m2!1e3!5s0x80dceec47cf99773:0x8e0bd7756e6af25c!4m15!1m8!3m7!1s0x80dceec47ef93b1b:0xbdc6a1d087b932bd!2s26071+Merit+Cir+%23114,+Laguna+Hills,+CA+92653,+USA!3b1!8m2!3d33.5748115!4d-117.6755535!16s%2Fg%2F11n09cth33!3m5!1s0x80dcebe3bbff6193:0xa55599af90af8db0!8m2!3d33.5748115!4d-117.6755535!16s%2Fg%2F11fwj32nr9!5m1!1e1?hl=en-GB&entry=ttu&g_ep=EgoyMDI2MDgyNi4wIKXMDSoASAFQAw%3D%3D";
+const MAP_LINK = MAPS_URL;
 
 interface Word {
  text: string;
@@ -190,12 +188,11 @@ export function ContactIntro() {
  }}
  className="mt-8 max-w-2xl text-base leading-relaxed text-mocha md:text-lg"
  >
- We&rsquo;d love to hear from you. Share a little about what&rsquo;s
- going on and what you&rsquo;re hoping for, and our team will follow
- up personally within{" "}
- <span className="italic text-espresso">one business day.</span>{" "}
- Prefer to talk it through? Give us a call or send an email anytime,
- we&rsquo;re happy to help.
+ If your back, neck, or a sports tweak is not settling, tell us what is
+ going on. We usually reply within{" "}
+ <span className="italic text-espresso">one business day.</span> Prefer
+ to talk? Call (949) 557-7208. We can also check PPO coverage before
+ you drive over.
  </motion.p>
  </div>
 

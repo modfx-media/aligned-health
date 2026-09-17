@@ -32,7 +32,7 @@ export interface Service {
 }
 
 const INTRO =
- "At Aligned Health we provide some of the most advanced treatment and therapeutic modalities.";
+ "Fourteen services live in the same Laguna Hills suite, so you are not sent across town for a second stop. Adjustments, decompression, percussion, red light — we pick what the tissue actually needs that day.";
 
 export const SERVICES: readonly Service[] = [
  {
@@ -153,9 +153,9 @@ interface Word {
  accent?: boolean;
 }
 const HEADING_WORDS: readonly Word[] = [
- { text: "Advanced" },
- { text: "therapeutic", accent: true },
- { text: "modalities." },
+ { text: "Everything we" },
+ { text: "can do", accent: true },
+ { text: "in one visit." },
 ];
 
 const HEADING_CONTAINER: Variants = {
@@ -242,8 +242,11 @@ export function ServicesIntro() {
  }}
  className="mt-4 max-w-xl text-sm leading-relaxed text-mocha/80"
  >
- Hover a card for a quick overview. Book any service through our
- online scheduler or call the office.
+ Hover a card for a quick overview. If you are driving in from{" "}
+ <Link href="/areas-we-serve" className="link-underline text-espresso">
+ elsewhere in Orange County
+ </Link>
+ , we will still see you here. Book online or call the office.
  </motion.p>
  </div>
  </div>

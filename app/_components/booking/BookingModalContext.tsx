@@ -8,6 +8,7 @@ import {
  useState,
  type ReactNode,
 } from "react";
+import { trackEvent } from "@/lib/analytics";
 
 interface BookingModalContextValue {
  isOpen: boolean;
@@ -23,7 +24,10 @@ const BookingModalContext = createContext<BookingModalContextValue | null>(
 export function BookingModalProvider({ children }: { children: ReactNode }) {
  const [isOpen, setIsOpen] = useState(false);
 
- const openBookingModal = useCallback(() => setIsOpen(true), []);
+ const openBookingModal = useCallback(() => {
+ setIsOpen(true);
+ trackEvent("generate_lead", { method: "booking_modal" });
+ }, []);
  const closeBookingModal = useCallback(() => setIsOpen(false), []);
 
  const value = useMemo(

@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { CLINIC } from "@/lib/site";
+import { CLINIC, HOURS, HOURS_NOTE, JANEAPP_EXISTING_URL, MAPS_URL } from "@/lib/site";
 import { EmailLink } from "@/app/_components/EmailLink";
 import { BookNowLink } from "@/app/_components/BookNowLink";
+import { TrackedTel } from "@/app/_components/TrackedTel";
 
 /**
  * Modern multi-column footer.
@@ -18,10 +19,8 @@ import { BookNowLink } from "@/app/_components/BookNowLink";
 const YEAR = new Date().getFullYear();
 const PHONE_TEL = CLINIC.phone.replace(/[^\d+]/g, "");
 const FULL_ADDRESS = `${CLINIC.address.street}, ${CLINIC.address.city}, ${CLINIC.address.region} ${CLINIC.address.postalCode}`;
-const EXISTING_PATIENT_SCHEDULER_URL =
- "https://alignedhealthoc.janeapp.com/#/existing-patients";
-const MAP_LINK =
- "https://www.google.com/maps/place/Aligned+Health/@33.5748115,-117.6755535,871m/data=!3m2!1e3!5s0x80dceec47cf99773:0x8e0bd7756e6af25c!4m15!1m8!3m7!1s0x80dceec47ef93b1b:0xbdc6a1d087b932bd!2s26071+Merit+Cir+%23114,+Laguna+Hills,+CA+92653,+USA!3b1!8m2!3d33.5748115!4d-117.6755535!16s%2Fg%2F11n09cth33!3m5!1s0x80dcebe3bbff6193:0xa55599af90af8db0!8m2!3d33.5748115!4d-117.6755535!16s%2Fg%2F11fwj32nr9!5m1!1e1?hl=en-GB&entry=ttu&g_ep=EgoyMDI2MDgyNi4wIKXMDSoASAFQAw%3D%3D";
+const EXISTING_PATIENT_SCHEDULER_URL = JANEAPP_EXISTING_URL;
+const MAP_LINK = MAPS_URL;
 
 const EXPLORE_LINKS = [
  { label: "About", href: "/about" },
@@ -59,13 +58,13 @@ export function SiteFooter() {
  <div className="md:col-span-5 lg:col-span-4">
  <FooterWordmark />
  <p className="mt-6 max-w-sm text-sm leading-relaxed text-linen/70">
- A highly qualified team helping the Southern California community
-                relieve pain, recover from surgery, and rebuild strength.
-                Schedule now.
+ Dr. Dustin Hack and Dr. Tara Hadden treat back pain, sports
+ injuries, and post-surgery stiffness in Laguna Hills. One-on-one
+ visits. Most PPO plans accepted.
  </p>
 
  {/* Big phone as a signature call to action */}
- <a
+ <TrackedTel
  href={`tel:${PHONE_TEL}`}
  className="mt-8 inline-flex flex-col gap-1 text-linen transition-colors hover:text-tan"
  >
@@ -73,7 +72,7 @@ export function SiteFooter() {
  <span className="font-serif text-3xl tracking-tight md:text-4xl">
  {CLINIC.phoneDisplay}
  </span>
- </a>
+ </TrackedTel>
  </div>
 
  {/* --- Explore nav --- */}
@@ -132,9 +131,12 @@ export function SiteFooter() {
  </span>
  Schedule now
  </div>
- <p className="mt-3 text-sm leading-relaxed text-linen/85">
- By appointment.
- </p>
+ <ul className="mt-3 space-y-1 text-sm leading-relaxed text-linen/85">
+ {HOURS.map((block) => (
+ <li key={block.label}>{block.label}</li>
+ ))}
+ </ul>
+ <p className="mt-2 text-xs text-linen/60">{HOURS_NOTE}</p>
  <BookNowLink className="btn-cta-onDark btn-sm mt-5 inline-flex w-full items-center justify-center gap-2 whitespace-normal text-center leading-snug">
  Book your New Patient Appointment
  <span aria-hidden="true">→</span>
@@ -156,8 +158,13 @@ export function SiteFooter() {
 
  {/* Bottom bar */}
  <div className="mt-6 flex flex-col-reverse items-start gap-4 text-xs text-linen/50 md:mt-8 md:flex-row md:items-center md:justify-between">
- <p>
+ <p className="max-w-xl">
  © {YEAR} {CLINIC.name}. All rights reserved. · Laguna Hills, CA
+ <span className="mt-2 block text-[0.7rem] leading-relaxed text-linen/40">
+ Information on this site is educational and is not a diagnosis.
+ Chiropractic care is provided by licensed doctors of chiropractic.
+ If you have a medical emergency, call 911.
+ </span>
  </p>
  <ul className="flex flex-wrap items-center gap-x-6 gap-y-2">
  <li>

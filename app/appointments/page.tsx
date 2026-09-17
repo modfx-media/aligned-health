@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { ClinicJsonLd } from "@/app/_components/ClinicJsonLd";
+import { PageChromeJsonLd } from "@/app/_components/ClinicJsonLd";
 import { AppointmentsIntro } from "@/app/appointments/_components/AppointmentsIntro";
 
 const PATH = "/appointments";
 
-const TITLE = "Book an Appointment · Aligned Health Chiropractic in Laguna Hills";
+const TITLE = "Existing Patient Appointments · Aligned Health Laguna Hills";
 const DESCRIPTION =
- "Book your chiropractic appointment at Aligned Health in Laguna Hills, CA. Schedule now, most PPO plans accepted, and secure online scheduling via Jane App.";
+  "Already a patient? Book your next visit online. New patients start with a 45-minute exam in Laguna Hills — we verify PPO coverage before you come in.";
 
 export const metadata: Metadata = {
  title: { absolute: TITLE },
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
 export default function AppointmentsPage() {
  return (
  <>
- <ClinicJsonLd pagePath={PATH} />
+      <PageChromeJsonLd path={PATH} name={TITLE} description={DESCRIPTION} />
  <AppointmentsIntro />
  </>
  );

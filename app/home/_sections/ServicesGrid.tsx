@@ -197,12 +197,20 @@ export function ServicesGrid() {
  ease: [0.16, 1, 0.3, 1],
  }}
  >
+ <div className="flex flex-wrap items-center gap-3">
  <Link href="/services" className="btn-outline btn-sm">
  View All Services
  <span aria-hidden="true" className="ml-1">
  →
  </span>
  </Link>
+ <Link href="/areas-we-serve" className="btn-outline btn-sm">
+ Areas we serve
+ <span aria-hidden="true" className="ml-1">
+ →
+ </span>
+ </Link>
+ </div>
  </motion.div>
  </div>
 

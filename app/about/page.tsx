@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ClinicJsonLd } from "@/app/_components/ClinicJsonLd";
+import { PageChromeJsonLd } from "@/app/_components/ClinicJsonLd";
 import { AboutApproach } from "@/app/about/_components/AboutApproach";
 import { AboutClosing } from "@/app/about/_components/AboutClosing";
 import { AboutIntro } from "@/app/about/_components/AboutIntro";
@@ -8,9 +8,9 @@ import { AboutValues } from "@/app/about/_components/AboutValues";
 
 const PATH = "/about";
 
-const TITLE = "About the Aligned Health Team · Chiropractic Care in Laguna Hills";
+const TITLE = "About Aligned Health · Chiropractors in Laguna Hills, CA";
 const DESCRIPTION =
- "Meet the doctors behind Aligned Health, the Laguna Hills chiropractic team helping patients prevent injuries and recover strength, balance, and mobility.";
+  "Meet Dr. Dustin Hack and Dr. Tara Hadden, the Laguna Hills chiropractors who still treat you one-on-one — not as a number on a 10-minute rotation.";
 
 export const metadata: Metadata = {
  title: { absolute: TITLE },
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
  return (
  <>
- <ClinicJsonLd pagePath={PATH} />
+      <PageChromeJsonLd path={PATH} name={TITLE} description={DESCRIPTION} />
  <AboutIntro />
  <AboutValues />
  <AboutApproach />

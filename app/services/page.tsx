@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { ClinicJsonLd } from "@/app/_components/ClinicJsonLd";
+import { PageChromeJsonLd } from "@/app/_components/ClinicJsonLd";
 import { ServicesIntro } from "@/app/services/_components/ServicesIntro";
 
 const PATH = "/services";
 
-const TITLE = "Chiropractic Services · Aligned Health in Laguna Hills, CA";
+const TITLE = "Chiropractic Services in Laguna Hills · Aligned Health";
 const DESCRIPTION =
- "Explore all 14 services at Aligned Health in Laguna Hills, CA, chiropractic adjustments, spinal decompression, PEMF, red light therapy, and more.";
+  "Fourteen on-site services in one Laguna Hills office: adjustments, spinal decompression, percussion, red light, and more. One doctor, one visit.";
 
 export const metadata: Metadata = {
  title: { absolute: TITLE },
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
 export default function ServicesPage() {
  return (
  <>
- <ClinicJsonLd pagePath={PATH} />
+      <PageChromeJsonLd path={PATH} name={TITLE} description={DESCRIPTION} />
  <ServicesIntro />
  </>
  );

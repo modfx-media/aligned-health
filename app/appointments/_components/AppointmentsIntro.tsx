@@ -7,6 +7,7 @@ import {
   SERVICES,
   ServiceCard,
 } from "@/app/services/_components/ServicesIntro";
+import { JANEAPP_EXISTING_URL } from "@/lib/site";
 
 /**
  * /appointments — this page is for EXISTING patients only.
@@ -17,8 +18,7 @@ import {
  * directly on the page, no intermediate form/modal for this flow.
  */
 
-const EXISTING_PATIENT_SCHEDULER_URL =
- "https://alignedhealthoc.janeapp.com/#/existing-patients";
+const EXISTING_PATIENT_SCHEDULER_URL = JANEAPP_EXISTING_URL;
 
 export function AppointmentsIntro() {
  const reduce = useReducedMotion();

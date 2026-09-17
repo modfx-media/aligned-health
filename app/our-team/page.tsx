@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import { ClinicJsonLd } from "@/app/_components/ClinicJsonLd";
+import { PageChromeJsonLd } from "@/app/_components/ClinicJsonLd";
 import { DoctorProfiles } from "@/app/our-team/_components/DoctorProfiles";
 import { TeamHero } from "@/app/our-team/_components/TeamHero";
 
 const PATH = "/our-team";
 
-const TITLE = "Our Team · Aligned Health Chiropractors in Laguna Hills, CA";
+const TITLE = "Our Team · Dr. Dustin Hack & Dr. Tara Hadden";
 const DESCRIPTION =
- "Meet Dr. Dustin Hack and Dr. Tara Hadden, the Aligned Health chiropractic team serving Laguna Hills and the greater Southern California community.";
+  "Meet the Laguna Hills chiropractors behind Aligned Health. Diversified adjusting, sports recovery, and honest answers when chiropractic is not the right next step.";
 
 export const metadata: Metadata = {
  title: { absolute: TITLE },
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
 export default function OurTeamPage() {
  return (
  <>
- <ClinicJsonLd pagePath={PATH} />
+      <PageChromeJsonLd path={PATH} name={TITLE} description={DESCRIPTION} />
  <TeamHero />
  <DoctorProfiles />
  </>

@@ -17,24 +17,25 @@ import { BookNowLink } from "@/app/_components/BookNowLink";
 
 interface City {
  name: string;
+ slug?: string;
  home?: boolean;
 }
 
 const CITIES: readonly City[] = [
- { name: "Laguna Hills", home: true },
- { name: "Laguna Niguel" },
- { name: "Laguna Beach" },
- { name: "Mission Viejo" },
- { name: "Aliso Viejo" },
- { name: "Lake Forest" },
- { name: "Irvine" },
- { name: "Newport Beach" },
- { name: "Costa Mesa" },
- { name: "Dana Point" },
- { name: "San Clemente" },
- { name: "San Juan Capistrano" },
- { name: "Rancho Santa Margarita" },
- { name: "Ladera Ranch" },
+ { name: "Laguna Hills", slug: "laguna-hills", home: true },
+ { name: "Laguna Niguel", slug: "laguna-niguel" },
+ { name: "Laguna Beach", slug: "laguna-beach" },
+ { name: "Mission Viejo", slug: "mission-viejo" },
+ { name: "Aliso Viejo", slug: "aliso-viejo" },
+ { name: "Lake Forest", slug: "lake-forest" },
+ { name: "Irvine", slug: "irvine" },
+ { name: "Newport Beach", slug: "newport-beach" },
+ { name: "Costa Mesa", slug: "costa-mesa" },
+ { name: "Dana Point", slug: "dana-point" },
+ { name: "San Clemente", slug: "san-clemente" },
+ { name: "San Juan Capistrano", slug: "san-juan-capistrano" },
+ { name: "Rancho Santa Margarita", slug: "rancho-santa-margarita" },
+ { name: "Ladera Ranch", slug: "ladera-ranch" },
 ];
 
 const GRID_CONTAINER: Variants = {
@@ -113,8 +114,12 @@ export function ContactAreas() {
  className="mt-5 text-base leading-relaxed text-linen/80 md:text-lg"
  >
  Our Laguna Hills office is a short drive from most of South OC.
- Patients regularly come to us from the neighborhoods below.
- Schedule now.
+ People come in from the cities below because the visit is
+ one-on-one, not a 10-minute rotation. Don&rsquo;t see yours?{" "}
+ <Link href="/areas-we-serve" className="link-underline text-linen">
+ All 30 cities we serve
+ </Link>
+ .
  </motion.p>
  </div>
 
@@ -135,6 +140,12 @@ export function ContactAreas() {
  ? "border-tan/60 bg-tan/10"
  : "border-linen/15 bg-espresso/40 hover:border-tan/40 hover:bg-espresso/60"
  }`}
+ >
+ <Link
+ href={
+ city.slug ? `/areas-we-serve/${city.slug}` : "/areas-we-serve"
+ }
+ className="block"
  >
  {/* Dot */}
  <span
@@ -165,6 +176,7 @@ export function ContactAreas() {
  className="pointer-events-none absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-tan/60 transition-transform duration-500 group-hover:scale-x-100"
  />
  ) : null}
+ </Link>
  </motion.li>
  ))}
  </motion.ul>

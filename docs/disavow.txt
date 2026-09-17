@@ -1,0 +1,39 @@
+# Aligned Health disavow file for Google Search Console
+# Submit via GSC > Removals > Disavow links
+# Cluster first seen Aug–Sep 2026. Do not buy more links.
+
+# spam domain: seobacklinkhome.com
+domain:seobacklinkhome.com
+
+# spam domain: fashionclothingnews.com
+domain:fashionclothingnews.com
+
+# spam domain: fittyfoody.com
+domain:fittyfoody.com
+
+# spam domain: uncledspizza.com
+domain:uncledspizza.com
+
+# spam domain: quotesblom.com
+domain:quotesblom.com
+
+# spam domain: theforbestimes.com
+domain:theforbestimes.com
+
+# spam domain: betwinnermirror.com
+domain:betwinnermirror.com
+
+# spam domain: seo-growth-authority-boost-hub.shop
+domain:seo-growth-authority-boost-hub.shop
+
+# spam domain: betulcrime.com
+domain:betulcrime.com
+
+# spam domain: homesforsaleoldgreenwichct.com
+domain:homesforsaleoldgreenwichct.com
+
+# spam domain: hostprinter.com
+domain:hostprinter.com
+
+# spam domain: bazerdaily.com
+domain:bazerdaily.com

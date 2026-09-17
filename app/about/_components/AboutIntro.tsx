@@ -190,9 +190,7 @@ export function AboutIntro() {
  }}
  className="mt-8 text-lg leading-relaxed text-mocha md:text-xl"
  >
- Whether it&rsquo;s preventing injuries or healing existing ones,
- Aligned Health doctors will help every patient achieve their
- maximum level of performance.
+ Whether it is a desk-tight neck, a disc that will not settle, or a sports tweak that stretching did not fix, you see a doctor here, not a rotation of assistants. We will tell you if chiropractic is the wrong next step.
  </motion.p>
 
  <motion.p
@@ -206,11 +204,7 @@ export function AboutIntro() {
  }}
  className="mt-6 text-lg leading-relaxed text-mocha md:text-xl"
  >
- At Aligned Health you will find doctors you can trust. Our team
- has one goal in mind:{" "}
- <span className="italic text-espresso">
- get our patients back to doing what they love.
- </span>
+ We are in Laguna Hills, at 26071 Merit Circle. The goal is simple: get you back to the thing you actually miss — running, lifting, sitting through a workday, picking up a kid — without selling you a package you did not ask for.
  </motion.p>
 
  {/* Signature strip: hairline + small tracked caps */}

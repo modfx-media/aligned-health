@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ClinicJsonLd } from "@/app/_components/ClinicJsonLd";
+import { PageChromeJsonLd } from "@/app/_components/ClinicJsonLd";
 import { CLINIC } from "@/lib/site";
 import { EmailLink } from "@/app/_components/EmailLink";
 
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
 export default function PrivacyPolicyPage() {
   return (
     <>
-      <ClinicJsonLd pagePath={PATH} />
+      <PageChromeJsonLd path={PATH} name={TITLE} description={DESCRIPTION} />
 
       <section className="section-cream section relative overflow-hidden">
         <div className="container-shell relative z-10">

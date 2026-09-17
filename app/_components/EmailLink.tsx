@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useState, type ReactNode } from "react";
+import { trackEvent } from "@/lib/analytics";
 
 /**
  * Email link with a robust fallback.
@@ -33,6 +34,7 @@ export function EmailLink({
  const [copied, setCopied] = useState(false);
 
  const handleClick = useCallback(() => {
+ trackEvent("email_click", { location: "site" });
  if (typeof navigator === "undefined" || !navigator.clipboard) return;
  navigator.clipboard
  .writeText(email)

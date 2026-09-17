@@ -24,13 +24,13 @@ const VALUES: readonly Value[] = [
  {
  index: "01",
  title: "Evidence-based care",
- body: "Our team combines proven chiropractic technique with modern therapeutic modalities, chosen based on what your body actually needs, not a one-size-fits-all protocol.",
+ body: "We pick the tool that matches the tissue in front of us. Diversified adjusting when a joint is stuck. Decompression when a disc is crowding a nerve. Soft-tissue work when the muscle is the problem. No one-size protocol, and no 20-visit package on day one.",
  Icon: BeakerIcon,
  },
  {
  index: "02",
  title: "Personal attention",
- body: "No assembly-line care. Every session is one-on-one with a highly qualified provider who takes the time to understand what you love to do, and how to get you back to it.",
+ body: "Every session is one-on-one with Dr. Dustin Hack or Dr. Tara Hadden. They stay in the room. If you live in Irvine, Mission Viejo, or Laguna Niguel and you are driving over, you should not spend that time with someone who is not the doctor.",
  Icon: HandIcon,
  },
 ];

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ClinicJsonLd } from "@/app/_components/ClinicJsonLd";
+import { PageChromeJsonLd } from "@/app/_components/ClinicJsonLd";
 import { BlogIndex } from "./_components/BlogIndex";
 import { decodeHtmlEntities } from "@/lib/blog";
 import { getPublishedSitePosts } from "@/lib/ranked/site-posts";
@@ -16,13 +16,6 @@ const DESCRIPTION =
 export const metadata: Metadata = {
   title: { absolute: TITLE },
   description: DESCRIPTION,
-  keywords: [
-    "chiropractic blog",
-    "chiropractor laguna hills blog",
-    "orange county chiropractic articles",
-    "recovery therapy blog",
-    "aligned health journal",
-  ],
   alternates: { canonical: PATH },
   // og:image / twitter:image come from ./opengraph-image.tsx. Setting
   // `images` here would override that generated card, so it's omitted.
@@ -64,13 +57,12 @@ export default async function BlogPage() {
         name: post.author.name,
       },
       image: post.hero.src,
-      keywords: post.keywords.join(", "),
     })),
   };
 
   return (
     <>
-      <ClinicJsonLd pagePath={PATH} />
+      <PageChromeJsonLd path={PATH} name={TITLE} description={DESCRIPTION} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }}

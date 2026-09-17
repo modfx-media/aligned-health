@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ClinicJsonLd } from "@/app/_components/ClinicJsonLd";
+import { PageChromeJsonLd } from "@/app/_components/ClinicJsonLd";
 import { ServiceAreaView } from "./_components/ServiceAreaView";
 import {
   getAllServiceSlugs,
@@ -35,7 +35,6 @@ export async function generateStaticParams(): Promise<
   return params;
 }
 
-// Unknown city/service combos 404 instead of rendering dynamically at runtime.
 export const dynamicParams = false;
 
 export async function generateMetadata({
@@ -52,7 +51,6 @@ export async function generateMetadata({
   return {
     title: { absolute: content.metaTitle },
     description: content.metaDescription,
-    keywords: service.keywords,
     alternates: { canonical: url },
     openGraph: {
       type: "article",
@@ -77,25 +75,32 @@ export default async function ServiceAreaPage({ params }: PageProps) {
   if (!location || !service) notFound();
 
   const content = buildServiceAreaContent(service, location);
-  const url = `${SITE_URL}/areas-we-serve/${location.slug}/${service.slug}`;
+  const path = `/areas-we-serve/${location.slug}/${service.slug}`;
+  const url = `${SITE_URL}${path}`;
   const related = service.relatedSlugs
     .map((slug) => SERVICES.find((s) => s.slug === slug))
     .filter((s): s is (typeof SERVICES)[number] => Boolean(s));
 
+  const faqs = [
+    content.localFaq,
+    ...content.extraFaqs,
+    ...service.faqs.slice(0, 2),
+  ];
+
   const serviceJsonLd = {
     "@context": "https://schema.org",
     "@type": "MedicalTherapy",
-    "@id": url,
+    "@id": `${url}#therapy`,
     url,
     name: `${service.label} in ${location.name}, CA`,
     alternateName: service.short,
     description: content.metaDescription,
     image: service.imageSrc,
-    provider: {
-      "@type": "MedicalClinic",
-      name: "Aligned Health",
-      url: `${SITE_URL}/`,
-    },
+    provider: { "@id": `${SITE_URL}#clinic` },
+    indication: service.indications.map((ind) => ({
+      "@type": "MedicalIndication",
+      name: ind.replace(/&[a-z]+;/g, ""),
+    })),
     areaServed: {
       "@type": "City",
       name: location.name,
@@ -106,7 +111,7 @@ export default async function ServiceAreaPage({ params }: PageProps) {
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: [content.localFaq, ...service.faqs.slice(0, 2)].map((f) => ({
+    mainEntity: faqs.map((f) => ({
       "@type": "Question",
       name: f.q,
       acceptedAnswer: {
@@ -116,22 +121,21 @@ export default async function ServiceAreaPage({ params }: PageProps) {
     })),
   };
 
-  const breadcrumbJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Areas We Serve", item: `${SITE_URL}/areas-we-serve` },
-      { "@type": "ListItem", position: 2, name: location.name, item: `${SITE_URL}/areas-we-serve/${location.slug}` },
-      { "@type": "ListItem", position: 3, name: service.label, item: url },
-    ],
-  };
-
   return (
     <>
-      <ClinicJsonLd
-        pagePath={`/areas-we-serve/${location.slug}/${service.slug}`}
-        areaServedName={location.name}
-        areaServedSameAs={`https://en.wikipedia.org/wiki/${location.wikipediaSlug}`}
+      <PageChromeJsonLd
+        path={path}
+        name={content.metaTitle}
+        description={content.metaDescription}
+        crumbs={[
+          { name: "Home", path: "/" },
+          { name: "Areas We Serve", path: "/areas-we-serve" },
+          {
+            name: location.name,
+            path: `/areas-we-serve/${location.slug}`,
+          },
+          { name: service.label, path },
+        ]}
       />
       <script
         type="application/ld+json"
@@ -140,10 +144,6 @@ export default async function ServiceAreaPage({ params }: PageProps) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       <ServiceAreaView
         service={service}

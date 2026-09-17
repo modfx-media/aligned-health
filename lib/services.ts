@@ -98,8 +98,8 @@ export const SERVICES: readonly Service[] = [
  },
  intro: {
  lead:
- "Chiropractic adjustments, also called spinal manipulation, are the foundation of every treatment plan we build at Aligned Health.",
- body: "We rely primarily on the Diversified technique: the most widely taught, most evidence-supported manual adjusting approach in the profession. Each thrust is hand-delivered, precisely aimed, and tailored to your spine on the day you walk in.",
+ "If your back or neck has been stuck, a chiropractic adjustment is usually where we start — not because it is trendy, but because restoring joint motion is often the fastest way to quiet the muscle that has been guarding it.",
+ body: "We use Diversified technique: a precise, hand-delivered thrust aimed at the segment that is actually restricted that day. You are not on a 10-minute rotation. Dr. Dustin Hack or Dr. Tara Hadden stays in the room, and if an adjustment is the wrong next step, we say so.",
  },
  howItWorks: [
  {
@@ -152,19 +152,35 @@ export const SERVICES: readonly Service[] = [
  faqs: [
  {
  q: "Does the adjustment hurt?",
- a: "For the vast majority of patients, no. The thrust is quick and most people describe it as a release of pressure rather than pain. Some mild next-day soreness (like after a good workout) is normal.",
+ a: "For most people, no. The thrust is quick. Patients usually describe a release of pressure, not a stab of pain. Mild next-day soreness, like after a decent workout, is normal and typically gone in a day or two.",
  },
  {
- q: "Is the popping sound bad?",
- a: "Not at all. The audible pop is the release of gas dissolved in the joint&rsquo;s synovial fluid. It&rsquo;s harmless and not required for the adjustment to work.",
+ q: "What does a chiropractic adjustment do?",
+ a: "It restores motion in a joint that has gotten stuck or guarded. That takes mechanical pressure off the tissues around it and often quiets the muscle that has been bracing. The pop you hear is gas leaving the joint fluid, not bones cracking, and it is not required for the adjustment to work.",
+ },
+ {
+ q: "What are the potential side effects of a chiropractic adjustment?",
+ a: "The common ones are temporary soreness, feeling a little tired, and the occasional mild headache. Those usually settle within 24 to 48 hours. Serious complications are rare. We screen first for red flags — progressive weakness, bowel or bladder changes, fever with back pain, major trauma — and we will not adjust a joint that should not be adjusted.",
+ },
+ {
+ q: "Is it normal to feel off after a chiropractic adjustment?",
+ a: "Yes, for a few hours. Your nervous system and the muscles around the joint just got new information. Most people feel settled by the next day. If you feel worse after 48 hours, or you notice spreading numbness or weakness, call us — that is not something to wait out.",
+ },
+ {
+ q: "Is foot tingling normal after a chiropractic adjustment?",
+ a: "Brief tingling after a low-back adjustment can happen as a nerve root that was crowded starts to move again. It should be mild and short. Tingling that lasts, spreads, or comes with weakness is not “normal settling.” Call the office or seek urgent care if that is what you are feeling.",
  },
  {
  q: "How many visits will I need?",
- a: "Most acute cases resolve or plateau in three to six visits. Chronic or complex cases take longer. We reassess constantly and change the plan if we&rsquo;re not seeing progress.",
+ a: "Most acute cases plateau in three to six visits. Chronic or complicated cases take longer. We reassess constantly and change the plan if we are not seeing progress. We will not sell you a 20-visit package on day one.",
+ },
+ {
+ q: "How much is a chiropractor visit without insurance in California?",
+ a: "Cash-pay is available. We quote the first-visit exam and any follow-up before you book, because those are different lengths. Call (949) 557-7208. HSA, FSA, and HRA cards are welcome. If you have PPO coverage, we would rather verify that first.",
  },
  {
  q: "Do I need a referral?",
- a: "No. Chiropractors are primary-contact providers, so you can book directly. If your case is outside our scope we&rsquo;ll tell you and refer you to the right specialist.",
+ a: "No. Chiropractors are primary-contact providers in California, so you can book directly. If your case is outside our scope we will tell you and refer you to the right specialist.",
  },
  ],
  relatedSlugs: [
@@ -264,11 +280,15 @@ export const SERVICES: readonly Service[] = [
  },
  {
  q: "Can it replace surgery?",
- a: "For many disc-related cases, yes, we think a well-structured decompression protocol is worth trying before injections or surgery. If it doesn&rsquo;t work, you haven&rsquo;t burned any bridges.",
+ a: "For many disc-related cases, a well-structured decompression protocol is worth trying before injections or surgery. If it does not work, you have not burned any bridges. We will say so.",
  },
  {
  q: "How is this different from a chiropractic adjustment?",
- a: "An adjustment restores motion at a specific joint. Decompression creates space and takes pressure off a disc or nerve. Most patients benefit from both together.",
+ a: "An adjustment restores motion at a specific joint. Decompression creates space and takes pressure off a disc or nerve. Most patients with sciatica or a herniated disc benefit from both, not one or the other.",
+ },
+ {
+ q: "Can spinal decompression help sciatica?",
+ a: "Often, when the sciatica is coming from a disc that is crowding a nerve root. You lie on a computer-controlled table that gently unloads that segment. It is not a miracle, and it is not for every back. We screen first. If the pain is from a tumor, infection, or fracture, decompression is the wrong tool.",
  },
  ],
  relatedSlugs: [

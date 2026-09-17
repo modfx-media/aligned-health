@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { BlogPostView } from "./_components/BlogPostView";
-import { decodeHtmlEntities, formatPostDate } from "@/lib/blog";
+import { decodeHtmlEntities } from "@/lib/blog";
 import {
   getPublishedSitePost,
   getPublishedSitePosts,
@@ -39,7 +39,6 @@ export async function generateMetadata({
   return {
     title: { absolute: plainTitle },
     description: plainDescription,
-    keywords: post.keywords,
     authors: [{ name: post.author.name }],
     alternates: { canonical: url },
     openGraph: {
@@ -95,11 +94,9 @@ export default async function BlogPostPage({ params }: PageProps) {
       },
     },
     image: [post.hero.src],
-    keywords: post.keywords.join(", "),
     articleSection: decodeHtmlEntities(post.category),
     wordCount: estimateWordCount(post),
     inLanguage: "en-US",
-    datePublishedText: formatPostDate(post.datePublished),
   };
 
   return (

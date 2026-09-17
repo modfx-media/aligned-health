@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import { ClinicJsonLd } from "@/app/_components/ClinicJsonLd";
+import { PageChromeJsonLd } from "@/app/_components/ClinicJsonLd";
 import { ContactIntro } from "./_components/ContactIntro";
 import { ContactMap } from "./_components/ContactMap";
 import { ContactAreas } from "./_components/ContactAreas";
 
 const PATH = "/contact-us";
 
-const TITLE = "Contact Aligned Health · Chiropractic in Laguna Hills, CA";
+const TITLE = "Contact Aligned Health · Laguna Hills Chiropractic Office";
 const DESCRIPTION =
- "Get in touch with Aligned Health in Laguna Hills, CA. Call, email, or send us a message, we typically respond within one business day.";
+  "Call (949) 557-7208, email, or send a note. We are at 26071 Merit Circle in Laguna Hills and usually reply within one business day.";
 
 export const metadata: Metadata = {
  title: { absolute: TITLE },
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
 export default function ContactUsPage() {
  return (
  <>
- <ClinicJsonLd pagePath={PATH} />
+      <PageChromeJsonLd path={PATH} name={TITLE} description={DESCRIPTION} />
  <ContactIntro />
  <ContactMap />
  <ContactAreas />

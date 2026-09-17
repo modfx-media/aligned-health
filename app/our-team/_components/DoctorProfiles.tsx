@@ -42,10 +42,10 @@ const DOCTORS: readonly Doctor[] = [
  "https://images.squarespace-cdn.com/content/v1/5ee5219c63842071d176def5/f9a83991-a8fd-4f8f-8fa2-a3c1b3a848df/Aligned+Health+New+Profile+pic.png",
  photoAlt: "Portrait of Dr. Dustin Hack, D.C.",
  bio: [
- "Being raised in the Midwest, Dr. Dustin grew up as an avid athlete participating in 3 sports; hockey, football and baseball. He attended Minnesota State University, Mankato and graduated in 2010 with his Bachelors of Science degree in Human Biology and Chemistry. While completing his undergrad, Dr. Dustin also completed 3 years of undergraduate research in genetics and served as Vice President of the Future Health Care Providers club. He then proceeded to obtain his Doctor of Chiropractic degree from Southern California University of Health Sciences. Dr. Dustin has been working in the field for 11 years where he incorporates his extensive knowledge of treating sport and non-sport injuries through prevention and rehabilitation. He utilizes his experience with percussion therapy, active, passive and resisted muscle therapy, as well as other soft tissue modalities to treat his patients.",
+ "Dr. Dustin grew up in the Midwest playing hockey, football, and baseball. He graduated from Minnesota State University, Mankato in 2010 with a B.S. in Human Biology and Chemistry, spent three years in undergraduate genetics research, and served as vice president of the Future Health Care Providers club. He earned his Doctor of Chiropractic degree from Southern California University of Health Sciences and has been in practice for 11 years. In the room he is known for pairing adjustments with percussion and hands-on muscle work so a sports injury or a desk-tight back is not treated as two separate visits.",
  ],
  techniquesIntro:
- "Dr. Dustin utilizes multiple techniques when treating his patients and is always eager to further his knowledge. He believes everyone responds differently to certain techniques and for that reason he has studied and utilizes the following:",
+ "People respond to different tools. That is why he has more than one way in:",
  techniques: [
  "Diversified Adjusting",
  "Activator",
@@ -56,7 +56,7 @@ const DOCTORS: readonly Doctor[] = [
  "Kinesiology Taping",
  ],
  closing:
- "He has experience treating premier athletes with conditions such as ankle sprains, golfer's elbow, tennis elbow, runner's knee, shoulder impingement and bursitis etc etc. He increases their performance and speeds up the healing process tremendously through adjustments, nutrition, soft-tissue work, percussion, exercise, physiotherapy modalities and kinesiotaping to get them back to play ASAP! His philosophy is based on \"The power that made the body heals the body.\" We just need to give it the tools to do so.",
+ "He has treated ankle sprains, golfer's and tennis elbow, runner's knee, and shoulder impingement in athletes who need to get back to play without guessing. The work is adjustments, soft-tissue, percussion, exercise, and taping when it actually helps. His line is simple: the body heals itself; we give it the conditions to do that.",
  quote:
  "The power that made the body heals the body, we just need to give it the tools to do so.",
  },
@@ -69,10 +69,10 @@ const DOCTORS: readonly Doctor[] = [
  "https://images.squarespace-cdn.com/content/v1/5ee5219c63842071d176def5/1600628721387-A4YL20DXRO9Z8PVW6SO1/IMG_1015-Edit_Original.JPG",
  photoAlt: "Portrait of Dr. Tara Hadden, D.C.",
  bio: [
- "Dr. Tara was born and raised in Southern California. She has participated in sports such as karate and softball. She played collegiate softball at the University of Hawaii from 2010-2013 and was apart of the 2010 Women's World Series team. At UH, she studied Kinesiology and Rehabilitation Science. She then attended Southern California University of Health Sciences where she graduated with Honors for her Doctorate of Chiropractic.",
+ "Dr. Tara was born and raised in Southern California. She grew up in karate and softball, played collegiate softball at the University of Hawaii from 2010 to 2013, and was part of the 2010 Women's World Series team. At UH she studied Kinesiology and Rehabilitation Science. She later graduated with honors from Southern California University of Health Sciences with her Doctor of Chiropractic degree.",
  ],
  techniquesIntro:
- "Over the years, Dr. Tara has extensive knowledge and training in:",
+ "The techniques she uses most:",
  techniques: [
  "Diversified technique",
  "Activator technique",
@@ -81,7 +81,7 @@ const DOCTORS: readonly Doctor[] = [
  "Rock tape and kinesio tape certified",
  ],
  closing:
- "Dr. Tara has treated a wide range of patients, from youth leagues to professional athletes, weekend warriors and general workforce personnel. She loves hearing about the activities that her patients enjoy and she wants to help get them back on the course, track, field, studio or office ASAP!",
+ "She treats kids in rec leagues, weekend warriors, and people who sit at a desk all week. She will ask what you actually miss doing — the course, the track, the studio, the office — and build the visit around getting you back there, not around a canned protocol.",
  },
 ];
 

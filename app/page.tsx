@@ -1,9 +1,14 @@
 import type { Metadata } from "next";
 import { BookNowBanner } from "@/app/_components/BookNowBanner";
-import { ClinicJsonLd } from "@/app/_components/ClinicJsonLd";
+import {
+  FaqJsonLd,
+  PageChromeJsonLd,
+} from "@/app/_components/ClinicJsonLd";
 import { BlogPreview } from "@/app/home/_sections/BlogPreview";
 import { ClosingSection } from "@/app/home/_sections/ClosingSection";
+import { GoogleReviews } from "@/app/home/_sections/GoogleReviews";
 import { Hero } from "@/app/home/_sections/Hero";
+import { HomeFaq, HOME_FAQ_LIST } from "@/app/home/_sections/HomeFaq";
 import { MapSection } from "@/app/home/_sections/MapSection";
 import { ServicesGrid } from "@/app/home/_sections/ServicesGrid";
 import { TeamSection } from "@/app/home/_sections/TeamSection";
@@ -14,9 +19,9 @@ import { getRecentSitePosts } from "@/lib/ranked/site-posts";
 
 const PATH = "/";
 
-const TITLE = "Chiropractic Care in Laguna Hills, CA | Aligned Health";
+const TITLE = "Chiropractor in Laguna Hills, CA | Aligned Health";
 const DESCRIPTION =
-  "Aligned Health's Laguna Hills chiropractic team helps patients relieve pain, recover from surgery, and rebuild strength, balance, and mobility. Schedule now.";
+  "See a Laguna Hills chiropractor for back pain, sports injuries, and spinal decompression. Dr. Dustin Hack and Dr. Tara Hadden. Most PPO plans accepted.";
 
 export const metadata: Metadata = {
   title: { absolute: TITLE },
@@ -44,25 +49,23 @@ export const metadata: Metadata = {
   },
 };
 
-/**
- * Homepage — server component shell, mounted at the site root (`/`).
- *
- * Each section is its own client component so motion can live at the leaves
- * while the shell (and JSON-LD) stays server-rendered for SEO. Sections
- * live under `app/home/_sections/` — that folder starts with `_`, so
- * Next.js treats it as private (no route generated).
- */
 export default async function HomePage() {
   const recentPosts = await getRecentSitePosts(3);
   return (
     <>
-      <ClinicJsonLd pagePath={PATH} />
+      <PageChromeJsonLd path={PATH} name={TITLE} description={DESCRIPTION} />
+      <FaqJsonLd faqs={HOME_FAQ_LIST} />
       <Hero />
       <TrustMarquee />
       <ValueProps />
       <ServicesGrid />
       <TeamSection />
-      <TestimonialsMarquee />
+      <GoogleReviews>
+        {(payload) => (
+          <TestimonialsMarquee reviews={payload.reviews} meta={payload.meta} />
+        )}
+      </GoogleReviews>
+      <HomeFaq />
       <BlogPreview posts={recentPosts} />
       <ClosingSection />
       <MapSection />

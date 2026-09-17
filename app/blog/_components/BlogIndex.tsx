@@ -94,12 +94,9 @@ export function BlogIndex({ posts }: { posts: readonly BlogPost[] }) {
  }}
  className="mt-8 text-base leading-relaxed text-mocha md:text-lg"
  >
- Plain-spoken articles on the services we run, the tools we use,
- and how we build recovery plans that actually stick, from the
- team at{" "}
- <span className="italic text-espresso">
- Aligned Health, Laguna Hills.
- </span>
+ Plain-spoken notes from the Laguna Hills office: what an adjustment
+ actually does, when decompression helps sciatica, and how we build a
+ plan that does not assume you live next door.
  </motion.p>
  </div>
  </div>

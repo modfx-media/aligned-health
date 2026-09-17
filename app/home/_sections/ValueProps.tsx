@@ -7,7 +7,6 @@ import {
  useReducedMotion,
  useScroll,
  useTransform,
- type Variants,
 } from "motion/react";
 import { useRef, type ReactNode } from "react";
 import { CLINIC } from "@/lib/site";
@@ -50,7 +49,7 @@ const STEPS: readonly Step[] = [
  {
  index: "01",
  title: "Schedule",
- body: "Patients can typically book same day or within 1–2 days of their preferred time.",
+ body: "Same-day and next-day visits when we can. If you are driving from Irvine or Mission Viejo, we will still try to get you in without a two-week wait.",
  highlight: "Schedule now",
  Icon: ClockIcon,
  },
@@ -73,7 +72,7 @@ const STEPS: readonly Step[] = [
  {
  index: "03",
  title: "One-on-One Sessions with a Highly Qualified Provider",
- body: "Diversified adjusting, percussion therapy, and pneumatic compression combined to restore mobility.",
+ body: "Diversified adjusting, percussion, and decompression in the same room. You see a doctor the whole visit, not an assistant rotating through.",
  highlight: "View Services",
  highlightHref: "/services",
  Icon: OrbitIcon,
@@ -123,10 +122,19 @@ export function ValueProps() {
  transition={{ duration: 0.75, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
  className="heading-section mt-4"
  >
- Care that shows up on time 
+ Care that shows up on time
  <br className="hidden md:block" /> and stays{" "}
  <span className="italic text-mocha">personal.</span>
  </motion.h2>
+ <p className="mt-4 max-w-xl text-sm leading-relaxed text-mocha md:text-base">
+ Same-day and next-day visits when we can, insurance checked before
+ you book, and a doctor in the room the whole time. We also treat
+ patients driving in from{" "}
+ <Link href="/areas-we-serve" className="link-underline text-espresso">
+ across Orange County
+ </Link>
+ .
+ </p>
  </div>
  </div>
 

@@ -65,10 +65,10 @@ interface HeadlinePart {
  newLine?: boolean;
 }
 const HEADLINE: readonly HeadlinePart[] = [
- { text: "Healing" },
- { text: "the" },
- { text: "Southern California", accent: true, newLine: true },
- { text: "Community", newLine: true },
+ { text: "Chiropractic care" },
+ { text: "in", newLine: true },
+ { text: "Laguna Hills,", accent: true },
+ { text: "built around you.", newLine: true },
 ];
 
 export function Hero() {
@@ -183,9 +183,10 @@ export function Hero() {
  }}
  className="body-lead mt-10 max-w-xl text-linen/75"
  >
- A highly qualified team helping patients relieve pain, recover
- from surgery, and rebuild strength, balance, and mobility.
- Schedule now.
+ Dr. Dustin Hack and Dr. Tara Hadden treat back pain, neck stiffness,
+ and sports injuries in Laguna Hills. You are not a number here. Most
+ PPO plans accepted — we verify before you book. Driving from Irvine
+ or Mission Viejo is normal for this office.
  </motion.p>
 
  <motion.div
@@ -208,10 +209,10 @@ export function Hero() {
  </span>
  </MagneticLink>
  <MagneticLink
- href="/our-team"
+ href="/areas-we-serve"
  className="btn-outline-invert"
  >
- Meet our team
+ Areas we serve
  </MagneticLink>
  </motion.div>
 

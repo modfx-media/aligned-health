@@ -33,9 +33,10 @@ export function AreasHubView() {
             <span className="italic text-tan">Orange County.</span>
           </h1>
           <p className="mt-6 max-w-xl text-base leading-relaxed text-linen/85 md:text-lg">
-            Our Laguna Hills office serves patients throughout Orange County.
-            Find your city below for local drive times and the full list of
-            services available to you.
+            We are based at 26071 Merit Circle in Laguna Hills. People drive
+            in from Irvine, Mission Viejo, Aliso Viejo, Lake Forest, and
+            farther south because the visit itself is unhurried. Pick your
+            city for real drive times and the 14 services we can do on site.
           </p>
           <div className="mt-8">
             <BookNowLink className="btn-primary inline-flex items-center gap-2">

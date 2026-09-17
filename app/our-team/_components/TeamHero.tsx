@@ -71,9 +71,9 @@ export function TeamHero() {
  }}
  className="mt-8 max-w-2xl text-lg leading-relaxed text-mocha md:text-xl"
  >
- A highly qualified team helping patients across Laguna Hills and
- Southern California relieve pain, recover mobility, and get back to
- doing what they love.{" "}
+ A highly qualified team in Laguna Hills. Dr. Dustin Hack and Dr. Tara
+ Hadden still treat you themselves. If you are coming from elsewhere in
+ Orange County, you will not spend that drive with an assistant.{" "}
  <BookNowLink className="link-underline text-espresso">
  Schedule now.
  </BookNowLink>
