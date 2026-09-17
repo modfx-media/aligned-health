@@ -45,6 +45,13 @@ export const MAPS_URL =
   "https://www.google.com/maps/place/Aligned+Health/@33.5748115,-117.6755535,17z/data=!3m1!4b1!4m6!3m5!1s0x80dcebe3bbff6193:0xa55599af90af8db0!8m2!3d33.5748115!4d-117.6755535!16s%2Fg%2F11fwj32nr9";
 
 /**
+ * Jane App scheduler for returning patients, who book directly without the
+ * lead-capture form new patients go through. Used by the home hero, the
+ * footer, and the /appointments page.
+ */
+export const EXISTING_PATIENT_SCHEDULER_URL = JANEAPP_EXISTING_URL;
+
+/**
  * Canonical route slugs. The order here also drives the sitemap ordering.
  * The homepage lives at `/` (site root); no separate `/home` alias.
  */

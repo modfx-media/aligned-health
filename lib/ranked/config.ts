@@ -34,8 +34,8 @@ export const COMMITTED_COVER_BY_SLUG: Readonly<
   Record<string, { src: string; alt: string }>
 > = {
   'diversified-chiropractic-vs-gentle-techniques-for-back-stiffness': {
-    src: '/images/blog/diversified-chiro.png',
-    alt: 'Chiropractor performing a diversified spinal adjustment on a patient at Aligned Health in Laguna Hills',
+    src: '/images/blog/devirsified-chiropractic-blog.png',
+    alt: 'Woman sitting on the edge of her bed holding her lower back from morning stiffness',
   },
 }
 

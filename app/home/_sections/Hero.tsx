@@ -11,6 +11,7 @@ import { useEffect, useRef, useState } from "react";
 import { Counter } from "@/app/_components/motion/Counter";
 import { MagneticLink } from "@/app/_components/motion/MagneticLink";
 import { useBookingModal } from "@/app/_components/booking/BookingModalContext";
+import { EXISTING_PATIENT_SCHEDULER_URL } from "@/lib/site";
 
 /**
  * /home hero, dark, editorial, motion-forward, with richer brand color use.
@@ -197,8 +198,9 @@ export function Hero() {
  delay: 1.15,
  ease: [0.16, 1, 0.3, 1],
  }}
- className="mt-12 flex flex-wrap items-center gap-4"
+ className="mt-12 flex flex-col items-start gap-4"
  >
+ <div className="flex flex-wrap items-center gap-4">
  <MagneticLink
  onClick={openBookingModal}
  className="btn-cta-onDark btn-lg"
@@ -213,6 +215,19 @@ export function Hero() {
  className="btn-outline-invert"
  >
  Areas we serve
+ </MagneticLink>
+ </div>
+ {/* Returning patients skip the lead-capture form and book
+ straight in Jane App. */}
+ <MagneticLink
+ href={EXISTING_PATIENT_SCHEDULER_URL}
+ external
+ className="btn-outline-invert"
+ >
+ Existing patient? Schedule here
+ <span aria-hidden="true" className="ml-1">
+ →
+ </span>
  </MagneticLink>
  </motion.div>
 

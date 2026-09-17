@@ -3,11 +3,11 @@
 import Link from "next/link";
 import { motion, useReducedMotion, type Variants } from "motion/react";
 import { useBookingModal } from "@/app/_components/booking/BookingModalContext";
+import { EXISTING_PATIENT_SCHEDULER_URL } from "@/lib/site";
 import {
   SERVICES,
   ServiceCard,
 } from "@/app/services/_components/ServicesIntro";
-import { JANEAPP_EXISTING_URL } from "@/lib/site";
 
 /**
  * /appointments — this page is for EXISTING patients only.
@@ -17,8 +17,6 @@ import { JANEAPP_EXISTING_URL } from "@/lib/site";
  * 2. Linen section: the Jane App existing-patients scheduler embedded
  * directly on the page, no intermediate form/modal for this flow.
  */
-
-const EXISTING_PATIENT_SCHEDULER_URL = JANEAPP_EXISTING_URL;
 
 export function AppointmentsIntro() {
  const reduce = useReducedMotion();

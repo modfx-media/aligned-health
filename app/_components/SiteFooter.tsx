@@ -1,6 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
-import { CLINIC, HOURS, HOURS_NOTE, JANEAPP_EXISTING_URL, MAPS_URL } from "@/lib/site";
+import {
+  CLINIC,
+  EXISTING_PATIENT_SCHEDULER_URL,
+  HOURS,
+  HOURS_NOTE,
+  MAPS_URL,
+} from "@/lib/site";
 import { EmailLink } from "@/app/_components/EmailLink";
 import { BookNowLink } from "@/app/_components/BookNowLink";
 import { TrackedTel } from "@/app/_components/TrackedTel";
@@ -18,8 +24,6 @@ import { TrackedTel } from "@/app/_components/TrackedTel";
 
 const YEAR = new Date().getFullYear();
 const PHONE_TEL = CLINIC.phone.replace(/[^\d+]/g, "");
-const FULL_ADDRESS = `${CLINIC.address.street}, ${CLINIC.address.city}, ${CLINIC.address.region} ${CLINIC.address.postalCode}`;
-const EXISTING_PATIENT_SCHEDULER_URL = JANEAPP_EXISTING_URL;
 const MAP_LINK = MAPS_URL;
 
 const EXPLORE_LINKS = [
