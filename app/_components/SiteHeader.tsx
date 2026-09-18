@@ -43,12 +43,20 @@ const NAV_ITEMS: readonly NavItem[] = [
  { label: "Our Team", href: "/our-team" },
  { label: "Services", href: "/services", hasServicesDropdown: true },
  { label: "Blog", href: "/blog" },
- { label: "Existing Patient\nAppointments", href: "/appointments" },
  { label: "Contact Us", href: "/contact-us" },
 ];
 
 const CTA = {
  label: "Book your New Patient Appointment",
+};
+
+/**
+ * Returning patients get their own button beside the new-patient CTA rather
+ * than a plain nav link, so both booking paths read as actions.
+ */
+const EXISTING_PATIENT_CTA = {
+ label: "Existing Patient Appointments",
+ href: "/appointments",
 };
 
 const PHONE_TEL = CLINIC.phone.replace(/[^\d+]/g, "");
@@ -105,9 +113,12 @@ export function SiteHeader() {
  <Wordmark onClick={close} />
 
  {/* Desktop nav */}
+ {/* Two booking buttons plus five links need ~1050px, so the
+ horizontal row only appears at `xl`; below that the sheet
+ (which carries both buttons) takes over. */}
  <nav
  aria-label="Primary"
- className="hidden items-center gap-8 lg:flex"
+ className="hidden shrink-0 items-center gap-6 xl:flex"
  >
  {NAV_ITEMS.map((item) =>
  item.hasServicesDropdown ? (
@@ -126,15 +137,31 @@ export function SiteHeader() {
  )}
  </nav>
 
- <div className="hidden lg:block">
- <BookNowLink className="btn-cta-onDark">
+ {/* Both pills share `btn-sm` so their type and height match. The
+ tan CTA carries a transparent border to offset the outline
+ button's 1px border, otherwise the two sit 2px apart. */}
+ <div className="hidden shrink-0 items-center gap-3 xl:flex">
+ <Link
+ href={EXISTING_PATIENT_CTA.href}
+ aria-current={
+ isActive(pathname, EXISTING_PATIENT_CTA.href) ? "page" : undefined
+ }
+ className={`btn-outline-invert px-5 py-3 text-[0.8rem] ${
+ isActive(pathname, EXISTING_PATIENT_CTA.href)
+ ? "bg-linen text-espresso"
+ : ""
+ }`}
+ >
+ {EXISTING_PATIENT_CTA.label}
+ </Link>
+ <BookNowLink className="btn-cta-onDark border border-transparent px-5 py-3 text-[0.8rem]">
  {CTA.label}
  </BookNowLink>
  </div>
 
  <button
  type="button"
- className="lg:hidden -mr-2 inline-flex h-11 w-11 items-center justify-center rounded-full text-linen transition-colors hover:bg-linen/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tan focus-visible:ring-offset-2 focus-visible:ring-offset-espresso"
+ className="xl:hidden -mr-2 inline-flex h-11 w-11 items-center justify-center rounded-full text-linen transition-colors hover:bg-linen/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tan focus-visible:ring-offset-2 focus-visible:ring-offset-espresso"
  aria-label={open ? "Close navigation menu" : "Open navigation menu"}
  aria-expanded={open}
  aria-controls={menuId}
@@ -147,7 +174,7 @@ export function SiteHeader() {
  {/* Mobile panel */}
  <div
  id={menuId}
- className={`lg:hidden grid overflow-hidden transition-[grid-template-rows,opacity] duration-300 ease-out ${
+ className={`xl:hidden grid overflow-hidden transition-[grid-template-rows,opacity] duration-300 ease-out ${
  open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
  }`}
  aria-hidden={!open}
@@ -181,6 +208,19 @@ export function SiteHeader() {
  >
  {CTA.label}
  </BookNowLink>
+ <Link
+ href={EXISTING_PATIENT_CTA.href}
+ onClick={close}
+ tabIndex={open ? 0 : -1}
+ aria-current={
+ isActive(pathname, EXISTING_PATIENT_CTA.href)
+ ? "page"
+ : undefined
+ }
+ className="btn-outline-invert btn-lg mt-3 w-full whitespace-normal text-center leading-snug"
+ >
+ {EXISTING_PATIENT_CTA.label}
+ </Link>
  </nav>
  </div>
  </div>
@@ -207,7 +247,7 @@ function Wordmark({ onClick }: { onClick: () => void }) {
  href="/"
  onClick={onClick}
  aria-label="Aligned Health, home"
- className="group inline-flex items-center rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tan focus-visible:ring-offset-2 focus-visible:ring-offset-espresso"
+ className="group inline-flex shrink-0 items-center rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tan focus-visible:ring-offset-2 focus-visible:ring-offset-espresso"
  >
  <Image
  src="/logos/aligned-health-light.png"
