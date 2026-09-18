@@ -11,7 +11,7 @@ import {
  useState,
  type KeyboardEvent as ReactKeyboardEvent,
 } from "react";
-import { CLINIC } from "@/lib/site";
+import { CLINIC, EXISTING_PATIENT_SCHEDULER_URL } from "@/lib/site";
 import { SERVICE_NAV_ITEMS } from "@/lib/services";
 import { BookNowLink } from "@/app/_components/BookNowLink";
 
@@ -52,11 +52,12 @@ const CTA = {
 
 /**
  * Returning patients get their own button beside the new-patient CTA rather
- * than a plain nav link, so both booking paths read as actions.
+ * than a plain nav link, so both booking paths read as actions. It links
+ * straight out to the Jane App scheduler rather than the /appointments page.
  */
 const EXISTING_PATIENT_CTA = {
  label: "Existing Patient Appointments",
- href: "/appointments",
+ href: EXISTING_PATIENT_SCHEDULER_URL,
 };
 
 const PHONE_TEL = CLINIC.phone.replace(/[^\d+]/g, "");
@@ -141,19 +142,14 @@ export function SiteHeader() {
  tan CTA carries a transparent border to offset the outline
  button's 1px border, otherwise the two sit 2px apart. */}
  <div className="hidden shrink-0 items-center gap-3 xl:flex">
- <Link
+ <a
  href={EXISTING_PATIENT_CTA.href}
- aria-current={
- isActive(pathname, EXISTING_PATIENT_CTA.href) ? "page" : undefined
- }
- className={`btn-outline-invert px-5 py-3 text-[0.8rem] ${
- isActive(pathname, EXISTING_PATIENT_CTA.href)
- ? "bg-linen text-espresso"
- : ""
- }`}
+ target="_blank"
+ rel="noopener noreferrer"
+ className="btn-outline-invert px-5 py-3 text-[0.8rem]"
  >
  {EXISTING_PATIENT_CTA.label}
- </Link>
+ </a>
  <BookNowLink className="btn-cta-onDark border border-transparent px-5 py-3 text-[0.8rem]">
  {CTA.label}
  </BookNowLink>
@@ -208,19 +204,16 @@ export function SiteHeader() {
  >
  {CTA.label}
  </BookNowLink>
- <Link
+ <a
  href={EXISTING_PATIENT_CTA.href}
+ target="_blank"
+ rel="noopener noreferrer"
  onClick={close}
  tabIndex={open ? 0 : -1}
- aria-current={
- isActive(pathname, EXISTING_PATIENT_CTA.href)
- ? "page"
- : undefined
- }
  className="btn-outline-invert btn-lg mt-3 w-full whitespace-normal text-center leading-snug"
  >
  {EXISTING_PATIENT_CTA.label}
- </Link>
+ </a>
  </nav>
  </div>
  </div>
