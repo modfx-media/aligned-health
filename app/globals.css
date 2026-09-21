@@ -168,7 +168,7 @@
 
 /* ---- Buttons (all pill-shaped) --------------------------------------- */
 @utility btn {
-  @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5
          text-sm font-medium tracking-wide leading-none whitespace-nowrap
          transition-all duration-200 ease-out
          focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tan focus-visible:ring-offset-2
@@ -196,7 +196,7 @@
   @apply btn text-espresso hover:bg-espresso/5;
 }
 @utility btn-sm {
-  @apply px-4 py-2 text-xs;
+  @apply px-4 py-2.5 text-xs;
 }
 @utility btn-lg {
   @apply px-8 py-4 text-base;

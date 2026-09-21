@@ -13,6 +13,11 @@ import { useRef } from "react";
 import type { Service } from "@/lib/services";
 import { MagneticLink } from "@/app/_components/motion/MagneticLink";
 import { useBookingModal } from "@/app/_components/booking/BookingModalContext";
+import {
+ EXISTING_PATIENT_CTA_LABEL,
+ EXISTING_PATIENT_SCHEDULER_URL,
+ NEW_PATIENT_CTA_LABEL,
+} from "@/lib/site";
 
 /**
  * Shared rendering shell for every /services/[slug] page.
@@ -215,7 +220,7 @@ export function ServicePageView({
  onClick={openBookingModal}
  className="btn-primary inline-flex items-center gap-2"
  >
- Book your New Patient Appointment
+ {NEW_PATIENT_CTA_LABEL}
  <span aria-hidden="true">→</span>
  </MagneticLink>
  </motion.div>
@@ -598,15 +603,15 @@ export function ServicePageView({
  onClick={openBookingModal}
  className="btn-primary btn-lg inline-flex items-center gap-2"
  >
- Book your New Patient Appointment
- <span aria-hidden="true">→</span>
+ {NEW_PATIENT_CTA_LABEL}
  </MagneticLink>
- <Link
- href="/contact-us"
- className="btn-outline-invert btn-sm inline-flex items-center gap-2"
+ <MagneticLink
+ href={EXISTING_PATIENT_SCHEDULER_URL}
+ external
+ className="btn-outline-invert btn-lg inline-flex items-center gap-2"
  >
- Or contact us <span aria-hidden="true">→</span>
- </Link>
+ {EXISTING_PATIENT_CTA_LABEL}
+ </MagneticLink>
  </div>
  </div>
  </div>

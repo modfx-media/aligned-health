@@ -11,7 +11,12 @@ import {
  useState,
  type KeyboardEvent as ReactKeyboardEvent,
 } from "react";
-import { CLINIC, EXISTING_PATIENT_SCHEDULER_URL } from "@/lib/site";
+import {
+ CLINIC,
+ EXISTING_PATIENT_CTA_LABEL,
+ EXISTING_PATIENT_SCHEDULER_URL,
+ NEW_PATIENT_CTA_LABEL,
+} from "@/lib/site";
 import { SERVICE_NAV_ITEMS } from "@/lib/services";
 import { BookNowLink } from "@/app/_components/BookNowLink";
 
@@ -47,7 +52,7 @@ const NAV_ITEMS: readonly NavItem[] = [
 ];
 
 const CTA = {
- label: "Book your New Patient Appointment",
+ label: NEW_PATIENT_CTA_LABEL,
 };
 
 /**
@@ -56,7 +61,7 @@ const CTA = {
  * straight out to the Jane App scheduler rather than the /appointments page.
  */
 const EXISTING_PATIENT_CTA = {
- label: "Existing Patient Appointments",
+ label: EXISTING_PATIENT_CTA_LABEL,
  href: EXISTING_PATIENT_SCHEDULER_URL,
 };
 
@@ -119,7 +124,7 @@ export function SiteHeader() {
  (which carries both buttons) takes over. */}
  <nav
  aria-label="Primary"
- className="hidden shrink-0 items-center gap-6 xl:flex"
+ className="hidden shrink-0 items-center gap-5 xl:flex"
  >
  {NAV_ITEMS.map((item) =>
  item.hasServicesDropdown ? (
@@ -138,19 +143,19 @@ export function SiteHeader() {
  )}
  </nav>
 
- {/* Both pills share `btn-sm` so their type and height match. The
- tan CTA carries a transparent border to offset the outline
- button's 1px border, otherwise the two sit 2px apart. */}
+ {/* Both pills share the same type size and a taller py so they
+ read as buttons, not thin chips. A transparent border on the
+ tan CTA offsets the outline button's 1px stroke. */}
  <div className="hidden shrink-0 items-center gap-3 xl:flex">
  <a
  href={EXISTING_PATIENT_CTA.href}
  target="_blank"
  rel="noopener noreferrer"
- className="btn-outline-invert px-5 py-3 text-[0.8rem]"
+ className="btn-outline-invert px-6 py-3.5 text-[0.8rem] leading-none"
  >
  {EXISTING_PATIENT_CTA.label}
  </a>
- <BookNowLink className="btn-cta-onDark border border-transparent px-5 py-3 text-[0.8rem]">
+ <BookNowLink className="btn-cta-onDark border border-transparent px-6 py-3.5 text-[0.8rem] leading-none">
  {CTA.label}
  </BookNowLink>
  </div>
@@ -264,7 +269,7 @@ function DesktopLink({ item, active }: { item: NavItem; active: boolean }) {
  <Link
  href={item.href}
  aria-current={active ? "page" : undefined}
- className={`group relative inline-flex shrink-0 items-center py-2 text-[0.82rem] font-medium uppercase tracking-[0.14em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tan focus-visible:ring-offset-2 focus-visible:ring-offset-espresso rounded-sm ${
+ className={`group relative inline-flex shrink-0 items-center py-2 text-[0.7rem] font-medium uppercase tracking-[0.16em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tan focus-visible:ring-offset-2 focus-visible:ring-offset-espresso rounded-sm ${
  stacked ? "text-center leading-tight" : "whitespace-nowrap"
  } ${active ? "text-tan" : "text-linen hover:text-tan"}`}
  >
@@ -379,7 +384,7 @@ function ServicesDropdown({
  aria-haspopup="menu"
  aria-controls={panelId}
  onKeyDown={onTriggerKeyDown}
- className={`group relative inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap py-2 text-[0.82rem] font-medium uppercase tracking-[0.14em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tan focus-visible:ring-offset-2 focus-visible:ring-offset-espresso rounded-sm ${
+ className={`group relative inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap py-2 text-[0.7rem] font-medium uppercase tracking-[0.16em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tan focus-visible:ring-offset-2 focus-visible:ring-offset-espresso rounded-sm ${
  active || open ? "text-tan" : "text-linen hover:text-tan"
  }`}
  >
@@ -467,10 +472,9 @@ function ServicesDropdown({
  </p>
  <BookNowLink
  role="menuitem"
- className="btn-primary btn-sm inline-flex items-center justify-center gap-2"
+ className="btn-primary inline-flex items-center justify-center gap-2 px-6 py-3.5"
  >
- Book your New Patient Appointment
- <span aria-hidden="true">→</span>
+ {CTA.label}
  </BookNowLink>
  </div>
  </div>
@@ -605,9 +609,9 @@ function MobileServicesAccordion({
  <BookNowLink
  onNavigate={onNavigate}
  tabIndex={expanded && tabIndex >= 0 ? 0 : -1}
- className="btn-cta-onDark btn-sm mt-2 inline-flex items-center gap-2"
+ className="btn-cta-onDark mt-2 inline-flex items-center gap-2 px-6 py-3.5"
  >
- Book your New Patient Appointment
+ {CTA.label}
  <span aria-hidden="true">→</span>
  </BookNowLink>
  </div>

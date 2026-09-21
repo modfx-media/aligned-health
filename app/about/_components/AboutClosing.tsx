@@ -6,7 +6,7 @@ import {
 } from "motion/react";
 import { MagneticLink } from "@/app/_components/motion/MagneticLink";
 import { useBookingModal } from "@/app/_components/booking/BookingModalContext";
-import { CLINIC } from "@/lib/site";
+import { CLINIC, NEW_PATIENT_CTA_LABEL } from "@/lib/site";
 
 /**
  * About / Closing CTA, dark espresso section pushing the visitor toward
@@ -87,7 +87,7 @@ export function AboutClosing() {
  onClick={openBookingModal}
  className="btn-cta-onDark btn-lg"
  >
- Book your New Patient Appointment
+ {NEW_PATIENT_CTA_LABEL}
  <span aria-hidden="true" className="ml-1">
  →
  </span>

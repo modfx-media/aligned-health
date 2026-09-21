@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { BookNowLink } from "@/app/_components/BookNowLink";
+import { NEW_PATIENT_CTA_LABEL } from "@/lib/site";
 import {
  motion,
  useReducedMotion,
@@ -304,10 +305,7 @@ export function ServicesIntro() {
  </div>
  <div className="flex flex-wrap items-center gap-4">
  <BookNowLink className="btn-accent">
- Book Online
- <span aria-hidden="true" className="ml-1">
- →
- </span>
+ {NEW_PATIENT_CTA_LABEL}
  </BookNowLink>
  <Link
  href="/contact-us"

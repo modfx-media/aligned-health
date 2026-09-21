@@ -7,6 +7,7 @@ import {
  type Variants,
 } from "motion/react";
 import { BookNowLink } from "@/app/_components/BookNowLink";
+import { NEW_PATIENT_CTA_LABEL } from "@/lib/site";
 
 /**
  * /contact-us, "Areas we serve" section on dark espresso. Grid of nearby
@@ -208,7 +209,7 @@ export function ContactAreas() {
  <span aria-hidden="true">↑</span>
  </Link>
  <BookNowLink className="btn-cta-onDark btn-sm inline-flex items-center gap-2">
- Book your New Patient Appointment
+ {NEW_PATIENT_CTA_LABEL}
  <span aria-hidden="true">→</span>
  </BookNowLink>
  </div>

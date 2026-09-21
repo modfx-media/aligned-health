@@ -9,7 +9,7 @@ import {
  type Variants,
 } from "motion/react";
 import { useRef } from "react";
-import { CLINIC, MAPS_URL } from "@/lib/site";
+import { CLINIC, MAPS_URL, NEW_PATIENT_CTA_LABEL } from "@/lib/site";
 import { EmailLink } from "@/app/_components/EmailLink";
 import { BookNowLink } from "@/app/_components/BookNowLink";
 import { LeadConnectorForm } from "@/app/_components/LeadConnectorForm";
@@ -323,7 +323,7 @@ function ContactSidebar() {
  Schedule now. Secure scheduling through Jane App.
  </p>
  <BookNowLink className="btn-cta-onDark btn-sm mt-5 inline-flex w-full items-center justify-center gap-2 whitespace-normal text-center leading-snug">
- Book your New Patient Appointment
+ {NEW_PATIENT_CTA_LABEL}
  <span aria-hidden="true">→</span>
  </BookNowLink>
  </div>

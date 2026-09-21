@@ -18,6 +18,11 @@ import { getServiceBySlug } from "@/lib/services";
 import { PostCard } from "@/app/blog/_components/PostCard";
 import { RichText } from "@/app/blog/_components/RichText";
 import { MagneticLink } from "@/app/_components/motion/MagneticLink";
+import {
+  EXISTING_PATIENT_CTA_LABEL,
+  EXISTING_PATIENT_SCHEDULER_URL,
+  NEW_PATIENT_CTA_LABEL,
+} from "@/lib/site";
 import { useBookingModal } from "@/app/_components/booking/BookingModalContext";
 
 /**
@@ -260,15 +265,15 @@ export function BlogPostView({
                 onClick={openBookingModal}
                 className="btn-primary btn-lg inline-flex items-center gap-2"
               >
-                Book your New Patient Appointment
-                <span aria-hidden="true">→</span>
+                {NEW_PATIENT_CTA_LABEL}
               </MagneticLink>
-              <Link
-                href="/contact-us"
-                className="btn-outline-invert btn-sm inline-flex items-center gap-2"
+              <MagneticLink
+                href={EXISTING_PATIENT_SCHEDULER_URL}
+                external
+                className="btn-outline-invert btn-lg inline-flex items-center gap-2"
               >
-                Or contact us <span aria-hidden="true">→</span>
-              </Link>
+                {EXISTING_PATIENT_CTA_LABEL}
+              </MagneticLink>
             </div>
           </div>
         </div>

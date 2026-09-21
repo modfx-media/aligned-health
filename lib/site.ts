@@ -51,6 +51,11 @@ export const MAPS_URL =
  */
 export const EXISTING_PATIENT_SCHEDULER_URL = JANEAPP_EXISTING_URL;
 
+/** Shared booking-button copy. Keep both labels in one place so header,
+ *  hero, footer, and in-page CTAs cannot drift apart. */
+export const NEW_PATIENT_CTA_LABEL = "New Patients Schedule Here";
+export const EXISTING_PATIENT_CTA_LABEL = "Existing Patients Schedule Here";
+
 /**
  * Canonical route slugs. The order here also drives the sitemap ordering.
  * The homepage lives at `/` (site root); no separate `/home` alias.

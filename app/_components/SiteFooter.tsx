@@ -2,10 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   CLINIC,
+  EXISTING_PATIENT_CTA_LABEL,
   EXISTING_PATIENT_SCHEDULER_URL,
   HOURS,
   HOURS_NOTE,
   MAPS_URL,
+  NEW_PATIENT_CTA_LABEL,
 } from "@/lib/site";
 import { EmailLink } from "@/app/_components/EmailLink";
 import { BookNowLink } from "@/app/_components/BookNowLink";
@@ -141,17 +143,16 @@ export function SiteFooter() {
  ))}
  </ul>
  <p className="mt-2 text-xs text-linen/60">{HOURS_NOTE}</p>
- <BookNowLink className="btn-cta-onDark btn-sm mt-5 inline-flex w-full items-center justify-center gap-2 whitespace-normal text-center leading-snug">
- Book your New Patient Appointment
- <span aria-hidden="true">→</span>
+ <BookNowLink className="btn-cta-onDark mt-5 inline-flex w-full items-center justify-center gap-2 whitespace-normal px-6 py-3.5 text-center leading-snug">
+ {NEW_PATIENT_CTA_LABEL}
  </BookNowLink>
  <a
  href={EXISTING_PATIENT_SCHEDULER_URL}
  target="_blank"
  rel="noopener noreferrer"
- className="btn-outline-invert btn-sm mt-3 inline-flex w-full items-center justify-center gap-2 whitespace-normal text-center leading-snug"
+ className="btn-outline-invert mt-3 inline-flex w-full items-center justify-center gap-2 whitespace-normal px-6 py-3.5 text-center leading-snug"
  >
- Existing patient? Schedule here <span aria-hidden="true">→</span>
+ {EXISTING_PATIENT_CTA_LABEL}
  </a>
  </div>
  </div>

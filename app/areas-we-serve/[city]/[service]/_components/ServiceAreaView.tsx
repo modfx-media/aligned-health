@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { BookNowLink } from "@/app/_components/BookNowLink";
+import { NEW_PATIENT_CTA_LABEL } from "@/lib/site";
 import type { Service } from "@/lib/services";
 import type { CityLocation } from "@/lib/locations";
 import type { ServiceAreaContent } from "@/lib/serviceAreas";
@@ -183,7 +184,7 @@ export function ServiceAreaView({
             </p>
             <div className="mt-10">
               <BookNowLink className="btn-primary inline-flex items-center gap-2">
-                Book your New Patient Appointment
+                {NEW_PATIENT_CTA_LABEL}
                 <span aria-hidden="true">&rarr;</span>
               </BookNowLink>
             </div>
@@ -230,7 +231,7 @@ export function ServiceAreaView({
             </h2>
           </div>
           <BookNowLink className="btn-cta-onDark inline-flex items-center gap-2 whitespace-nowrap">
-            Book your New Patient Appointment
+            {NEW_PATIENT_CTA_LABEL}
             <span aria-hidden="true">&rarr;</span>
           </BookNowLink>
         </div>

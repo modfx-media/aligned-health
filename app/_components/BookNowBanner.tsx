@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
-import { CLINIC } from "@/lib/site";
+import { CLINIC, NEW_PATIENT_CTA_LABEL } from "@/lib/site";
 import { BookNowLink } from "@/app/_components/BookNowLink";
 
 /**
@@ -139,9 +139,8 @@ export function BookNowBanner() {
                 <PhoneIcon />
                 <span>{CLINIC.phoneDisplay}</span>
               </a>
-              <BookNowLink className="btn-cta-onDark btn-sm inline-flex flex-1 items-center justify-center gap-2 sm:flex-initial">
-                Book your New Patient Appointment
-                <span aria-hidden="true">→</span>
+              <BookNowLink className="btn-cta-onDark inline-flex flex-1 items-center justify-center gap-2 px-6 py-3.5 sm:flex-initial">
+                {NEW_PATIENT_CTA_LABEL}
               </BookNowLink>
               <button
                 type="button"

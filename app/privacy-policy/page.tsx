@@ -115,7 +115,7 @@ export default function PrivacyPolicyPage() {
                     Jane App
                   </a>
                   , our third-party practice-management platform. When you
-                  click &ldquo;Book your New Patient Appointment&rdquo; you
+                  click &ldquo;New Patients Schedule Here&rdquo; you
                   are directed to
                   Jane&rsquo;s secure portal. Any personal, contact, or
                   clinical information you enter there is handled under

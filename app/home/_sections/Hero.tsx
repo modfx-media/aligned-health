@@ -11,7 +11,11 @@ import { useEffect, useRef, useState } from "react";
 import { Counter } from "@/app/_components/motion/Counter";
 import { MagneticLink } from "@/app/_components/motion/MagneticLink";
 import { useBookingModal } from "@/app/_components/booking/BookingModalContext";
-import { EXISTING_PATIENT_SCHEDULER_URL } from "@/lib/site";
+import {
+ EXISTING_PATIENT_CTA_LABEL,
+ EXISTING_PATIENT_SCHEDULER_URL,
+ NEW_PATIENT_CTA_LABEL,
+} from "@/lib/site";
 
 /**
  * /home hero, dark, editorial, motion-forward, with richer brand color use.
@@ -205,10 +209,7 @@ export function Hero() {
  onClick={openBookingModal}
  className="btn-cta-onDark btn-lg"
  >
- Book your New Patient Appointment
- <span aria-hidden="true" className="ml-1">
- →
- </span>
+ {NEW_PATIENT_CTA_LABEL}
  </MagneticLink>
  <MagneticLink
  href="/areas-we-serve"
@@ -224,10 +225,7 @@ export function Hero() {
  external
  className="btn-outline-invert"
  >
- Existing patient? Schedule here
- <span aria-hidden="true" className="ml-1">
- →
- </span>
+ {EXISTING_PATIENT_CTA_LABEL}
  </MagneticLink>
  </motion.div>
 

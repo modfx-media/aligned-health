@@ -3,7 +3,10 @@
 import Link from "next/link";
 import { motion, useReducedMotion, type Variants } from "motion/react";
 import { useBookingModal } from "@/app/_components/booking/BookingModalContext";
-import { EXISTING_PATIENT_SCHEDULER_URL } from "@/lib/site";
+import {
+  EXISTING_PATIENT_CTA_LABEL,
+  EXISTING_PATIENT_SCHEDULER_URL,
+} from "@/lib/site";
 import {
   SERVICES,
   ServiceCard,
@@ -96,8 +99,7 @@ export function AppointmentsIntro() {
  rel="noopener noreferrer"
  className="btn-primary btn-lg inline-flex items-center gap-2"
  >
-                Schedule Now
- <span aria-hidden="true">→</span>
+                {EXISTING_PATIENT_CTA_LABEL}
  </a>
  </motion.div>
 

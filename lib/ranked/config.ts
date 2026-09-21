@@ -8,7 +8,7 @@ export const DEFAULT_COVER = '/images/blog/default-cover.jpg'
 export const DEFAULT_COVER_ALT = 'Aligned Health chiropractic care in Laguna Hills'
 
 export const DEFAULT_CTA = {
-  label: 'Book your New Patient Appointment',
+  label: 'New Patients Schedule Here',
   href: '/contact-us',
 }
 
