@@ -15,6 +15,7 @@ import { TeamSection } from "@/app/home/_sections/TeamSection";
 import { TestimonialsMarquee } from "@/app/home/_sections/TestimonialsMarquee";
 import { TrustMarquee } from "@/app/home/_sections/TrustMarquee";
 import { ValueProps } from "@/app/home/_sections/ValueProps";
+import { getDisplayedGoogleReviews } from "@/lib/google-reviews";
 import { getRecentSitePosts } from "@/lib/ranked/site-posts";
 
 const PATH = "/";
@@ -51,11 +52,12 @@ export const metadata: Metadata = {
 
 export default async function HomePage() {
   const recentPosts = await getRecentSitePosts(3);
+  const googleReviews = await getDisplayedGoogleReviews();
   return (
     <>
       <PageChromeJsonLd path={PATH} name={TITLE} description={DESCRIPTION} />
       <FaqJsonLd faqs={HOME_FAQ_LIST} />
-      <Hero />
+      <Hero featuredReview={googleReviews.reviews[0]} />
       <TrustMarquee />
       <ValueProps />
       <ServicesGrid />

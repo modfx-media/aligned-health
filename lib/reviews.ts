@@ -4,10 +4,10 @@
  * Never fabricate. Hide the section if the list is empty.
  */
 export const googleReviewsMeta = {
-  rating: 0,
-  reviewCount: 0,
+  rating: 5,
+  reviewCount: 43,
   fiveStarCount: 0,
-  placeId: "",
+  placeId: "ChIJk2H_u-Pr3IARsI2vkK-ZVaU",
   reviewsUrl:
     "https://www.google.com/maps/place/Aligned+Health/@33.5748115,-117.6755535,17z/data=!3m1!4b1!4m6!3m5!1s0x80dcebe3bbff6193:0xa55599af90af8db0!8m2!3d33.5748115!4d-117.6755535!16s%2Fg%2F11fwj32nr9",
 } as const;
@@ -87,7 +87,11 @@ export const googleReviews: GoogleReview[] = [
 ];
 
 export function isFiveStarReview(review: GoogleReview): boolean {
-  return review.rating === 5 && review.quote.trim().length > 0;
+  return (
+    review.rating === 5 &&
+    review.quote.trim().length > 0 &&
+    review.name.trim().length > 0
+  );
 }
 
 export const fiveStarReviews = googleReviews.filter(isFiveStarReview);

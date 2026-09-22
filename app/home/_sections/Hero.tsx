@@ -16,6 +16,7 @@ import {
  EXISTING_PATIENT_SCHEDULER_URL,
  NEW_PATIENT_CTA_LABEL,
 } from "@/lib/site";
+import type { GoogleReview } from "@/lib/reviews";
 
 /**
  * /home hero, dark, editorial, motion-forward, with richer brand color use.
@@ -76,7 +77,18 @@ const HEADLINE: readonly HeadlinePart[] = [
  { text: "built around you.", newLine: true },
 ];
 
-export function Hero() {
+const FALLBACK_REVIEW: GoogleReview = {
+ name: "Nick",
+ rating: 5,
+ quote:
+  "I had an amazing experience! Dr. Dustin was incredibly accommodating, and his adjustment and treatment were absolutely top-notch. I highly recommend him!",
+};
+
+export function Hero({
+ featuredReview,
+}: {
+ featuredReview?: GoogleReview;
+} = {}) {
  const reduce = useReducedMotion();
  const { openBookingModal } = useBookingModal();
  const sectionRef = useRef<HTMLElement>(null);
@@ -357,12 +369,10 @@ export function Hero() {
  5-star review
  </p>
  <p className="mt-1.5 text-sm leading-snug text-linen/90">
- &ldquo;I had an amazing experience! Dr. Dustin was incredibly
- accommodating, and his adjustment and treatment were
- absolutely top-notch. I highly recommend him!&rdquo;
+ &ldquo;{(featuredReview ?? FALLBACK_REVIEW).quote}&rdquo;
  </p>
  <p className="mt-2 text-[0.65rem] uppercase tracking-[0.2em] text-linen/60">
- &mdash; Nick, Google review
+ &mdash; {(featuredReview ?? FALLBACK_REVIEW).name}, Google review
  </p>
  </div>
  </div>

@@ -1,5 +1,6 @@
 import { LOCATIONS } from "@/lib/locations";
 import { getDisplayedGoogleReviews } from "@/lib/google-reviews";
+import { isFiveStarReview } from "@/lib/reviews";
 import { CLINIC, SITE_URL, absoluteUrl, HOURS, MAPS_URL } from "@/lib/site";
 
 export function JsonLd({ data }: { data: unknown }) {
@@ -226,15 +227,18 @@ export async function ClinicJsonLd() {
       bestRating: 5,
       worstRating: 1,
     };
-    schema.review = reviews.map((review) => ({
+  }
+
+  const visible = reviews.filter(isFiveStarReview);
+  if (visible.length > 0) {
+    schema.review = visible.map((review) => ({
       "@type": "Review",
       author: { "@type": "Person", name: review.name },
       reviewBody: review.quote,
       reviewRating: {
         "@type": "Rating",
-        ratingValue: review.rating,
-        bestRating: 5,
-        worstRating: 1,
+        ratingValue: "5",
+        bestRating: "5",
       },
     }));
   }

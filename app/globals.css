@@ -244,3 +244,21 @@
 @utility stat-label {
   @apply text-xs md:text-sm uppercase tracking-[0.18em] opacity-80;
 }
+
+@keyframes marquee-ltr {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-rtl {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
