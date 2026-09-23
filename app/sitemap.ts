@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { querySitemapFlags } from "@/lib/cms/query";
 import { ROUTES, SITE_URL } from "@/lib/site";
 import { getPublishedSitePosts } from "@/lib/ranked/site-posts";
 import { getAllServices } from "@/lib/services";
@@ -8,9 +9,12 @@ import { LOCATIONS } from "@/lib/locations";
  * Sitemap lists URLs only. Google ignores changefreq and priority.
  * lastmod is omitted on static routes so we do not stamp every URL as "today".
  * Blog posts keep lastmod from their real publish/modified dates.
+ * Published CMS flags can hide a URL (noIndex / excludeFromSitemap).
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const posts = await getPublishedSitePosts();
+  const flags = await querySitemapFlags();
+  const flagsByPath = new Map(flags.map((flag) => [flag.path, flag]));
 
   const staticEntries: MetadataRoute.Sitemap = ROUTES.map((path) => ({
     url: `${SITE_URL}${path}`,
@@ -44,5 +48,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...cityEntries,
     ...cityServiceEntries,
     ...postEntries,
-  ];
+  ]
+    .filter((entry) => {
+      const path = entry.url.replace(SITE_URL, "") || "/";
+      const flag = flagsByPath.get(path);
+      if (!flag) return true;
+      return !flag.noIndex && !flag.excludeFromSitemap;
+    })
+    .map((entry) => {
+      const path = entry.url.replace(SITE_URL, "") || "/";
+      const flag = flagsByPath.get(path);
+      const lastModified =
+        flag?.sourceUpdatedAt || flag?.updatedAt || entry.lastModified;
+      return lastModified ? { ...entry, lastModified } : entry;
+    });
 }

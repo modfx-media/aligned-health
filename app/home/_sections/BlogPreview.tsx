@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion, useReducedMotion, type Variants } from "motion/react";
-import { PostCard } from "@/app/blog/_components/PostCard";
+import { PostCard } from "@/app/(site)/blog/_components/PostCard";
 import type { BlogPost } from "@/lib/blog";
 
 /**
