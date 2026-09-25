@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server'
+import { upsertRankedPostsAsDrafts } from '@/lib/cms/ranked-upsert'
+import { getPublishedSitePosts } from '@/lib/ranked/site-posts'
 import { syncAllRankedSites } from '@/lib/ranked/sync'
 
 export const runtime = 'nodejs'
@@ -18,5 +20,7 @@ function isAuthorized(request: Request): boolean {
 export async function GET(request: Request) {
   if (!isAuthorized(request)) return unauthorized()
   const result = await syncAllRankedSites()
+  const posts = await getPublishedSitePosts().catch(() => [])
+  await upsertRankedPostsAsDrafts(posts)
   return NextResponse.json({ ok: true, ranAt: new Date().toISOString(), ...result })
 }
