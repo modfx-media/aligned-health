@@ -13,7 +13,7 @@ export const Users: CollectionConfig = {
     },
   },
   access: {
-    admin: authenticated,
+    admin: ({ req }) => Boolean(req.user),
     create: authenticated,
     delete: authenticated,
     read: authenticated,
