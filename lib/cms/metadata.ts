@@ -2,29 +2,39 @@ import type { Metadata } from "next";
 import { queryRoutedContentByPath } from "./query";
 import { withCMS } from "./safe";
 
+function seoFields(doc: Record<string, unknown>): Record<string, unknown> {
+  const meta = doc.meta;
+  return meta && typeof meta === "object" ? (meta as Record<string, unknown>) : {};
+}
+
 function robotsFromDoc(doc: Record<string, unknown>): Metadata["robots"] {
-  if (!doc.noIndex && !doc.noFollow) return undefined;
+  const meta = seoFields(doc);
+  const noIndex = Boolean(meta.noIndex ?? doc.noIndex);
+  const noFollow = Boolean(meta.noFollow ?? doc.noFollow);
+  if (!noIndex && !noFollow) return undefined;
   return {
-    index: !doc.noIndex,
-    follow: !doc.noFollow,
+    index: !noIndex,
+    follow: !noFollow,
   };
 }
 
 function cmsMetadata(doc: Record<string, unknown>, fallback: Metadata): Metadata {
-  const meta = (doc.meta ?? {}) as Record<string, unknown>;
+  const meta = seoFields(doc);
   const title = String(
-    meta.title || doc.metaTitle || doc.title || doc.label || doc.name || "",
+    meta.title || doc.documentTitle || doc.title || doc.label || doc.name || "",
   );
   const description = String(
     meta.description ||
-      doc.metaDescription ||
+      doc.documentDescription ||
       doc.description ||
       fallback.description ||
       "",
   );
-  const path =
+  const canonical =
+    (typeof meta.canonicalUrl === "string" && meta.canonicalUrl) ||
     (typeof doc.canonicalUrl === "string" && doc.canonicalUrl) ||
     (typeof doc.path === "string" ? doc.path : undefined);
+  const path = canonical;
   const image =
     (typeof doc.ogImage === "string" && doc.ogImage) ||
     (typeof doc.imageSrc === "string" && doc.imageSrc) ||

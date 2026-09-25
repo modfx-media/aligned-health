@@ -61,11 +61,17 @@ export async function querySitemapFlags(): Promise<CMSSitemapFlags[]> {
 
       for (const doc of result.docs) {
         const record = doc as Record<string, unknown>;
+        const meta =
+          record.meta && typeof record.meta === "object"
+            ? (record.meta as Record<string, unknown>)
+            : {};
         if (typeof record.path !== "string") continue;
         flags.push({
           path: record.path,
-          noIndex: Boolean(record.noIndex),
-          excludeFromSitemap: Boolean(record.excludeFromSitemap),
+          noIndex: Boolean(meta.noIndex ?? record.noIndex),
+          excludeFromSitemap: Boolean(
+            meta.excludeFromSitemap ?? record.excludeFromSitemap,
+          ),
           updatedAt:
             typeof record.updatedAt === "string" ? record.updatedAt : undefined,
           sourceUpdatedAt:

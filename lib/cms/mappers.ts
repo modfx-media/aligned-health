@@ -68,8 +68,8 @@ export function mapService(doc: Record<string, unknown>): Service {
     slug: text(doc.slug),
     label: text(doc.label),
     short: text(doc.short),
-    metaTitle: text(doc.metaTitle || doc.title, text(doc.label)),
-    metaDescription: text(doc.metaDescription || doc.description),
+    metaTitle: text(doc.documentTitle || doc.title, text(doc.label)),
+    metaDescription: text(doc.documentDescription || doc.description),
     keywords: list(doc.keywords),
     imageSrc: text(doc.imageSrc),
     imageAlt: text(doc.imageAlt),
@@ -143,8 +143,8 @@ export function mapServiceAreaContent(
 ): ServiceAreaContent {
   const variant = num(doc.structuralVariant, fallback.structuralVariant);
   return {
-    metaTitle: text(doc.metaTitle, fallback.metaTitle),
-    metaDescription: text(doc.metaDescription, fallback.metaDescription),
+    metaTitle: text(doc.documentTitle, fallback.metaTitle),
+    metaDescription: text(doc.documentDescription, fallback.metaDescription),
     intro: text(doc.intro, fallback.intro),
     localStory: text(doc.localStory, fallback.localStory),
     whyChooseUs: list(doc.whyChooseUs).length

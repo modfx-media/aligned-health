@@ -11,9 +11,11 @@
     "generate:types": "payload generate:types",
     "generate:importmap": "payload generate:importmap",
     "cms:export": "tsx scripts/cms-export.ts",
-    "cms:import": "tsx --import dotenv/config scripts/cms-import.ts",
+    "cms:import": "tsx --require ./scripts/next-env-cjs.cjs --import dotenv/config scripts/cms-import.ts",
     "cms:validate-export": "tsx scripts/cms-validate-export.ts",
-    "cms:verify-preview": "tsx scripts/cms-verify-preview.ts"
+    "cms:verify-preview": "tsx scripts/cms-verify-preview.ts",
+    "cms:push": "tsx --require ./scripts/next-env-cjs.cjs --import dotenv/config scripts/cms-push.ts",
+    "cms:create-user": "tsx --require ./scripts/next-env-cjs.cjs --import dotenv/config scripts/cms-create-user.ts"
   },
   "dependencies": {
     "@payloadcms/db-vercel-postgres": "^3.90.2",
@@ -42,5 +44,9 @@
     "tailwindcss": "^4",
     "tsx": "^4.23.15",
     "typescript": "^5"
+  },
+  "optionalDependencies": {
+    "@img/sharp-libvips-linux-x64": "^1.3.3",
+    "@img/sharp-linux-x64": "^0.35.4"
   }
 }

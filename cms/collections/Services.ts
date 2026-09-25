@@ -21,8 +21,8 @@ export const Services: CollectionConfig = {
   fields: [
     { name: "label", type: "text", required: true },
     { name: "short", type: "text" },
-    { name: "metaTitle", type: "text" },
-    { name: "metaDescription", type: "textarea" },
+    { name: "documentTitle", type: "text" },
+    { name: "documentDescription", type: "textarea" },
     stringListField("keywords", "Keywords"),
     { name: "imageSrc", type: "text" },
     { name: "imageAlt", type: "text" },

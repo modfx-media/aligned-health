@@ -45,8 +45,8 @@ export const Locations: CollectionConfig = {
       fields: faqFields,
     },
     { name: "extraFaqs", type: "array", fields: faqFields },
-    { name: "metaTitle", type: "text" },
-    { name: "metaDescription", type: "textarea" },
+    { name: "documentTitle", type: "text" },
+    { name: "documentDescription", type: "textarea" },
     ...identityFields,
   ],
   hooks: {

@@ -60,10 +60,10 @@ export default buildConfig({
       uploadsCollection: "media",
       tabbedUI: true,
       generateTitle: ({ doc }) =>
-        String(doc?.metaTitle || doc?.title || doc?.label || doc?.name || ""),
+        String(doc?.documentTitle || doc?.title || doc?.label || doc?.name || ""),
       generateDescription: ({ doc }) =>
         String(
-          doc?.metaDescription ||
+          doc?.documentDescription ||
             doc?.description ||
             doc?.lead ||
             doc?.intro ||

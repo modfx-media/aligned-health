@@ -117,6 +117,49 @@ async function main() {
   const skippedRefs: string[] = [];
   let created = 0;
   let updated = 0;
+  const only = (process.env.CMS_IMPORT_ONLY ?? "")
+    .split(",")
+    .map((value) => value.trim())
+    .filter(Boolean);
+
+  const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+  async function withRetry<T>(label: string, fn: () => Promise<T>): Promise<T> {
+    let last: unknown;
+    for (let attempt = 0; attempt < 4; attempt += 1) {
+      try {
+        return await fn();
+      } catch (error) {
+        last = error;
+        const message = error instanceof Error ? error.message : String(error);
+        if (!/ETIMEDOUT|cannot connect|connection terminated|ECONNRESET|too many clients/i.test(message)) {
+          throw error;
+        }
+        console.error(`[cms-import] retry ${attempt + 1} ${label}: ${message}`);
+        await sleep(500 * (attempt + 1));
+      }
+    }
+    throw last;
+  }
+
+  for (const collection of COLLECTION_ORDER) {
+    let page = 1;
+    for (;;) {
+      const existingDocs = await payload.find({
+        collection,
+        limit: 200,
+        page,
+        depth: 0,
+        draft: true,
+        overrideAccess: true,
+      });
+      for (const doc of existingDocs.docs) {
+        const legacyId = (doc as { legacyId?: string }).legacyId;
+        if (legacyId) idByLegacy.set(`${collection}:${legacyId}`, doc.id);
+      }
+      if (!existingDocs.hasNextPage) break;
+      page += 1;
+    }
+  }
 
   const resolve = (ref: Ref) => {
     const id = idByLegacy.get(`${ref.$ref.collection}:${ref.$ref.legacyId}`);
@@ -128,6 +171,7 @@ async function main() {
   };
 
   for (const collection of COLLECTION_ORDER) {
+    if (only.length && !only.includes(collection)) continue;
     const batch = data.records.filter((record) => record.collection === collection);
     for (const record of batch) {
       const resolved = walkRefs(record.data, resolve) as Record<string, unknown>;
@@ -136,32 +180,38 @@ async function main() {
         _status: "draft",
       };
 
-      const existing = (await findExisting(
-        payload,
-        collection,
-        record,
+      const existing = (await withRetry(`${collection}:${record.legacyId}`, () =>
+        findExisting(payload, collection, record),
       )) as { id: string | number } | null;
 
       if (existing) {
-        await payload.update({
-          collection: collection as never,
-          id: existing.id,
-          data: dataToSave as never,
-          draft: true,
-          overrideAccess: true,
-        });
+        await withRetry(`${collection}:${record.legacyId}`, () =>
+          payload.update({
+            collection: collection as never,
+            id: existing.id,
+            data: dataToSave as never,
+            draft: true,
+            overrideAccess: true,
+          }),
+        );
         idByLegacy.set(`${collection}:${record.legacyId}`, existing.id);
         updated += 1;
       } else {
-        const createdDoc = (await payload.create({
-          collection: collection as never,
-          data: dataToSave as never,
-          draft: true,
-          overrideAccess: true,
-        })) as { id: string | number };
+        const createdDoc = (await withRetry(`${collection}:${record.legacyId}`, () =>
+          payload.create({
+            collection: collection as never,
+            data: dataToSave as never,
+            draft: true,
+            overrideAccess: true,
+          }),
+        )) as { id: string | number };
         idByLegacy.set(`${collection}:${record.legacyId}`, createdDoc.id);
         created += 1;
       }
+      if ((created + updated) % 25 === 0) {
+        console.error(`[cms-import] ${created} created, ${updated} updated (${collection})`);
+      }
+      await sleep(25);
     }
   }
 
