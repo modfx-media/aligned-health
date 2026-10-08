@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { publicMediaUrl } from "./media-url";
 import { queryRoutedContentByPath } from "./query";
 import { withCMS } from "./safe";
 
@@ -36,9 +37,11 @@ function cmsMetadata(doc: Record<string, unknown>, fallback: Metadata): Metadata
     (typeof doc.path === "string" ? doc.path : undefined);
   const path = canonical;
   const image =
-    (typeof doc.ogImage === "string" && doc.ogImage) ||
-    (typeof doc.imageSrc === "string" && doc.imageSrc) ||
-    (typeof doc.heroSrc === "string" && doc.heroSrc) ||
+    publicMediaUrl(doc.featuredImage) ||
+    publicMediaUrl(meta.image) ||
+    publicMediaUrl(doc.ogImage) ||
+    publicMediaUrl(doc.imageSrc) ||
+    publicMediaUrl(doc.heroSrc) ||
     undefined;
   const imageAlt =
     (typeof doc.ogImageAlt === "string" && doc.ogImageAlt) ||

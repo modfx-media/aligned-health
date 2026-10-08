@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { BlogPostDetailView } from "@/lib/cms/catalog-views";
 import { CMSRoute } from "@/lib/cms/CMSRoute";
+import { mapPost } from "@/lib/cms/mappers";
 import { metadataForPath } from "@/lib/cms/metadata";
+import { queryRoutedContentByPath } from "@/lib/cms/query";
 import { decodeHtmlEntities } from "@/lib/blog";
 import {
   getPublishedSitePost,
@@ -27,7 +29,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = await getPublishedSitePost(slug);
   if (!post) {
-    return { title: "Not Found" };
+    return metadataForPath(`/blog/${slug}`, { title: "Not Found" });
   }
 
   const plainTitle = decodeHtmlEntities(post.title);
@@ -59,7 +61,11 @@ export async function generateMetadata({
 export default async function BlogPostPage({ params }: PageProps) {
   const { slug } = await params;
   const posts = await getPublishedSitePosts();
-  const post = posts.find((item) => item.slug === slug);
+  let post = posts.find((item) => item.slug === slug);
+  if (!post) {
+    const routed = await queryRoutedContentByPath(`/blog/${slug}`);
+    if (routed?.collection === "posts") post = mapPost(routed.doc);
+  }
   if (!post) notFound();
 
   const related = posts.filter((item) => item.slug !== post.slug).slice(0, 3);

@@ -2,6 +2,8 @@ import type { BlogBlock, BlogPost } from "@/lib/blog";
 import type { CityLocation, Region } from "@/lib/locations";
 import type { Service } from "@/lib/services";
 import type { CityOverviewContent, ServiceAreaContent } from "@/lib/serviceAreas";
+import { mediaAlt, publicMediaUrl } from "./media-url";
+import { composeArticleBody } from "./post-content";
 
 function text(value: unknown, fallback = ""): string {
   return typeof value === "string" ? value : fallback;
@@ -193,14 +195,35 @@ function mapBlocks(value: unknown): BlogBlock[] {
   return blocks;
 }
 
+function publicBlogSlug(doc: Record<string, unknown>): string {
+  const path = text(doc.path);
+  if (path.startsWith("/blog/")) {
+    const slug = path.slice("/blog/".length).replace(/\/+$/, "");
+    if (slug && !slug.includes("/")) return slug;
+  }
+  return text(doc.slug);
+}
+
+function seoMeta(doc: Record<string, unknown>): Record<string, unknown> {
+  return doc.meta && typeof doc.meta === "object"
+    ? (doc.meta as Record<string, unknown>)
+    : {};
+}
+
 export function mapPost(doc: Record<string, unknown>): BlogPost {
+  const meta = seoMeta(doc);
+  const featured = doc.featuredImage;
+  const metaImage = meta.image;
+  const title = text(doc.title);
+  const published = text(doc.datePublished) || text(doc.createdAt);
+
   return {
-    slug: text(doc.slug),
-    title: text(doc.title),
+    slug: publicBlogSlug(doc),
+    title,
     description: text(doc.description),
     keywords: list(doc.keywords),
     category: text(doc.category, "Chiropractic Care"),
-    datePublished: text(doc.datePublished).slice(0, 10),
+    datePublished: published.slice(0, 10),
     dateModified: text(doc.dateModified).slice(0, 10) || undefined,
     readingTime: num(doc.readingTime, 5),
     author: {
@@ -208,10 +231,14 @@ export function mapPost(doc: Record<string, unknown>): BlogPost {
       role: text(doc.authorRole, "Chiropractor · Aligned Health"),
     },
     hero: {
-      src: text(doc.heroSrc, "/images/blog/default-cover.jpg"),
-      alt: text(doc.heroAlt, text(doc.title)),
+      src:
+        publicMediaUrl(featured) ||
+        publicMediaUrl(metaImage) ||
+        publicMediaUrl(doc.heroSrc) ||
+        "/images/blog/default-cover.jpg",
+      alt: text(doc.heroAlt) || mediaAlt(featured) || mediaAlt(metaImage) || title,
     },
-    body: mapBlocks(doc.body),
+    body: composeArticleBody(mapBlocks(doc.body), doc.content),
     relatedServiceSlugs: list(doc.relatedServiceSlugs),
   };
 }

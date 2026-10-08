@@ -1,3 +1,4 @@
+import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import type { CollectionConfig } from "payload";
 import { authenticated, authenticatedOrPublished } from "../access";
 import {
@@ -19,6 +20,15 @@ export const Posts: CollectionConfig = {
   ...previewAdmin("title"),
   fields: [
     { name: "title", type: "text", required: true },
+    {
+      name: "featuredImage",
+      type: "upload",
+      relationTo: "media",
+      label: "Featured image",
+      admin: {
+        description: "Hero image on the published article. Uploads are stored in Vercel Blob.",
+      },
+    },
     { name: "description", type: "textarea" },
     stringListField("keywords", "Keywords"),
     { name: "category", type: "text" },
@@ -27,8 +37,24 @@ export const Posts: CollectionConfig = {
     { name: "readingTime", type: "number" },
     { name: "authorName", type: "text" },
     { name: "authorRole", type: "text" },
-    { name: "heroSrc", type: "text" },
+    {
+      name: "heroSrc",
+      type: "text",
+      admin: {
+        description: "Optional image URL used when no featured image is uploaded.",
+      },
+    },
     { name: "heroAlt", type: "text" },
+    {
+      name: "content",
+      type: "richText",
+      label: "Rich text",
+      editor: lexicalEditor(),
+      admin: {
+        description:
+          "Inline images and extra copy. Rendered after the structured body. Leave empty to keep the structured body as the article.",
+      },
+    },
     {
       name: "body",
       type: "array",

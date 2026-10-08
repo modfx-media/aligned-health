@@ -3,6 +3,9 @@ import { authenticated } from "../access";
 
 export const Media: CollectionConfig = {
   slug: "media",
+  admin: {
+    enableRichTextRelationship: true,
+  },
   access: {
     create: authenticated,
     delete: authenticated,
