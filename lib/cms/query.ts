@@ -21,7 +21,7 @@ export async function queryRoutedContentByPath(
         collection,
         where: { path: { equals: path } },
         limit: 1,
-        depth: 0,
+        depth: path.startsWith("/blog/") ? 2 : 0,
         draft: isEnabled,
         overrideAccess: isEnabled,
       });

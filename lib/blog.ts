@@ -21,7 +21,8 @@ export type BlogBlock =
  | { type: "ul"; items: string[] }
  | { type: "ol"; items: string[] }
  | { type: "quote"; text: string; attribution?: string }
- | { type: "callout"; title: string; text: string };
+ | { type: "callout"; title: string; text: string }
+ | { type: "image"; src: string; alt: string };
 
 export interface BlogPost {
  slug: string;

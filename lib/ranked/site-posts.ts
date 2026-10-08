@@ -1,5 +1,6 @@
 import type { BlogBlock, BlogPost } from '@/lib/blog'
 import { getAllPosts } from '@/lib/blog'
+import { getPublishedCmsPosts, mergePostsBySlug } from '@/lib/cms/posts'
 import { getPublishedBlogPosts } from './posts'
 import type { BlogPostData } from './types'
 
@@ -109,23 +110,24 @@ export async function getPublishedSitePosts(): Promise<BlogPost[]> {
   const published = await getPublishedBlogPosts()
   const localBySlug = new Map(local.map((post) => [post.slug, post]))
 
-  return published
-    .map((data) => {
-      const original = localBySlug.get(data.slug)
-      if (original) {
-        return {
-          ...original,
-          datePublished: data.publishDate,
-          hero: {
-            ...original.hero,
-            src: data.coverImage,
-            alt: original.hero.alt || data.coverAlt,
-          },
-        }
+  const rankedAndLocal = published.map((data) => {
+    const original = localBySlug.get(data.slug)
+    if (original) {
+      return {
+        ...original,
+        datePublished: data.publishDate,
+        hero: {
+          ...original.hero,
+          src: data.coverImage,
+          alt: original.hero.alt || data.coverAlt,
+        },
       }
-      return rankedPostToSitePost(data)
-    })
-    .sort((a, b) => (a.datePublished < b.datePublished ? 1 : -1))
+    }
+    return rankedPostToSitePost(data)
+  })
+
+  const cms = await getPublishedCmsPosts()
+  return mergePostsBySlug(rankedAndLocal, cms)
 }
 
 export async function getPublishedSitePost(slug: string): Promise<BlogPost | undefined> {

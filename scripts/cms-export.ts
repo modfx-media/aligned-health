@@ -224,6 +224,9 @@ function buildExport() {
           if (block.type === "callout") {
             return { type: "callout", title: block.title, text: block.text };
           }
+          if (block.type === "image") {
+            return { type: "p", text: `![${block.alt}](${block.src})` };
+          }
           return { type: block.type, text: block.text };
         }),
         relatedServiceSlugs: listValues(post.relatedServiceSlugs),

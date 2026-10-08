@@ -17,6 +17,7 @@ import { ServiceAreas } from "./cms/collections/ServiceAreas";
 import { Header } from "./cms/globals/Header";
 import { Footer } from "./cms/globals/Footer";
 import { SiteSettings } from "./cms/globals/SiteSettings";
+import { ensurePostMediaColumns } from "./cms/post-media-schema";
 import { livePreviewBreakpoints } from "./lib/cms/preview";
 import { getCorsOrigins, getPublicServerURL } from "./lib/cms/url";
 
@@ -25,6 +26,7 @@ const dirname = path.dirname(filename);
 
 const isVercel = Boolean(process.env.VERCEL);
 const isImport = process.env.CMS_IMPORT_APPLY === "1";
+const blobToken = process.env.PAYLOAD_BLOB_READ_WRITE_TOKEN;
 
 export default buildConfig({
   secret: process.env.PAYLOAD_SECRET || "",
@@ -51,6 +53,9 @@ export default buildConfig({
   cors: getCorsOrigins(),
   csrf: getCorsOrigins(),
   sharp,
+  onInit: async (payload) => {
+    await ensurePostMediaColumns(payload);
+  },
   typescript: {
     outputFile: path.resolve(dirname, "payload-types.ts"),
   },
@@ -85,11 +90,12 @@ export default buildConfig({
       ],
     }),
     vercelBlobStorage({
-      enabled: Boolean(process.env.BLOB_READ_WRITE_TOKEN),
+      enabled: Boolean(blobToken),
       collections: {
         media: true,
       },
-      token: process.env.BLOB_READ_WRITE_TOKEN,
+      token: blobToken,
+      clientUploads: true,
     }),
   ],
 });

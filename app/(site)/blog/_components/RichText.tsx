@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { BlogBlock } from "@/lib/blog";
 
 /**
@@ -162,6 +163,20 @@ export function RichText({ blocks }: { blocks: readonly BlogBlock[] }) {
  {renderInline(block.text)}
  </p>
  </aside>
+ );
+ case "image":
+ return (
+ <figure key={i} className="my-10 overflow-hidden rounded-3xl">
+ <div className="relative aspect-[16/9] w-full bg-espresso/5">
+ <Image
+ src={block.src}
+ alt={block.alt}
+ fill
+ sizes="(max-width: 768px) 100vw, 768px"
+ className="object-cover"
+ />
+ </div>
+ </figure>
  );
  }
  })}
