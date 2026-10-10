@@ -1,5 +1,9 @@
+import { draftMode } from "next/headers";
+import { notFound } from "next/navigation";
 import { getServiceBySlug } from "@/lib/services";
 import { getLocationBySlug } from "@/lib/locations";
+import { isSharedDefaultCover } from "@/lib/cms/media-url";
+import { isPublishDateLive } from "@/lib/publish-date";
 import { getPublishedSitePosts } from "@/lib/ranked/site-posts";
 import { buildCityOverview, buildServiceAreaContent } from "@/lib/serviceAreas";
 import {
@@ -65,10 +69,26 @@ export async function RenderRoutedContent({
   }
 
   if (collection === "posts") {
-    const post = mapPost(doc);
-    const others = (await getPublishedSitePosts().catch(() => [])).filter(
-      (item) => item.slug !== post.slug,
-    );
+    const { isEnabled } = await draftMode();
+    const scheduled =
+      typeof doc.datePublished === "string" && doc.datePublished
+        ? doc.datePublished
+        : typeof doc.createdAt === "string"
+          ? doc.createdAt
+          : "";
+    if (!isEnabled && !isPublishDateLive(scheduled)) notFound();
+
+    let post = mapPost(doc);
+    const sitePosts = await getPublishedSitePosts().catch(() => []);
+    const merged = sitePosts.find((item) => item.slug === post.slug);
+    if (
+      merged &&
+      isSharedDefaultCover(post.hero.src) &&
+      !isSharedDefaultCover(merged.hero.src)
+    ) {
+      post = { ...post, hero: merged.hero };
+    }
+    const others = sitePosts.filter((item) => item.slug !== post.slug);
     return <BlogPostDetailView post={post} related={others.slice(0, 3)} />;
   }
 

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
 import { BlogPostDetailView } from "@/lib/cms/catalog-views";
 import { CMSRoute } from "@/lib/cms/CMSRoute";
@@ -6,6 +7,7 @@ import { mapPost } from "@/lib/cms/mappers";
 import { metadataForPath } from "@/lib/cms/metadata";
 import { queryRoutedContentByPath } from "@/lib/cms/query";
 import { decodeHtmlEntities } from "@/lib/blog";
+import { isPublishDateLive } from "@/lib/publish-date";
 import {
   getPublishedSitePost,
   getPublishedSitePosts,
@@ -29,6 +31,11 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = await getPublishedSitePost(slug);
   if (!post) {
+    const routed = await queryRoutedContentByPath(`/blog/${slug}`);
+    const scheduled = cmsSchedule(routed?.doc);
+    if (routed?.collection === "posts" && !isPublishDateLive(scheduled)) {
+      return { title: "Not Found", robots: { index: false, follow: false } };
+    }
     return metadataForPath(`/blog/${slug}`, { title: "Not Found" });
   }
 
@@ -58,15 +65,30 @@ export async function generateMetadata({
   });
 }
 
+function cmsSchedule(doc: Record<string, unknown> | undefined): string {
+  if (!doc) return "";
+  if (typeof doc.datePublished === "string" && doc.datePublished) {
+    return doc.datePublished;
+  }
+  return typeof doc.createdAt === "string" ? doc.createdAt : "";
+}
+
 export default async function BlogPostPage({ params }: PageProps) {
   const { slug } = await params;
+  const { isEnabled: draft } = await draftMode();
   const posts = await getPublishedSitePosts();
   let post = posts.find((item) => item.slug === slug);
   if (!post) {
     const routed = await queryRoutedContentByPath(`/blog/${slug}`);
-    if (routed?.collection === "posts") post = mapPost(routed.doc);
+    const scheduled = cmsSchedule(routed?.doc);
+    if (
+      routed?.collection === "posts" &&
+      (draft || isPublishDateLive(scheduled))
+    ) {
+      post = mapPost(routed.doc);
+    }
   }
-  if (!post) notFound();
+  if (!post || (!draft && !isPublishDateLive(post.datePublished))) notFound();
 
   const related = posts.filter((item) => item.slug !== post.slug).slice(0, 3);
 

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { upsertRankedPostsAsDrafts } from '@/lib/cms/ranked-upsert'
+import { revalidateRankedBlog } from '@/lib/ranked/revalidate'
 import { getPublishedSitePosts } from '@/lib/ranked/site-posts'
 import { syncAllRankedSites } from '@/lib/ranked/sync'
 
@@ -22,5 +23,6 @@ export async function GET(request: Request) {
   const result = await syncAllRankedSites()
   const posts = await getPublishedSitePosts().catch(() => [])
   await upsertRankedPostsAsDrafts(posts)
+  revalidateRankedBlog()
   return NextResponse.json({ ok: true, ranAt: new Date().toISOString(), ...result })
 }
