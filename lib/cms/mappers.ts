@@ -2,7 +2,7 @@ import type { BlogBlock, BlogPost } from "@/lib/blog";
 import type { CityLocation, Region } from "@/lib/locations";
 import type { Service } from "@/lib/services";
 import type { CityOverviewContent, ServiceAreaContent } from "@/lib/serviceAreas";
-import { mediaAlt, publicMediaUrl } from "./media-url";
+import { mediaAlt, publicMediaUrl, SHARED_DEFAULT_COVER } from "./media-url";
 import { composeArticleBody } from "./post-content";
 
 function text(value: unknown, fallback = ""): string {
@@ -235,7 +235,7 @@ export function mapPost(doc: Record<string, unknown>): BlogPost {
         publicMediaUrl(featured) ||
         publicMediaUrl(metaImage) ||
         publicMediaUrl(doc.heroSrc) ||
-        "/images/blog/default-cover.jpg",
+        SHARED_DEFAULT_COVER,
       alt: text(doc.heroAlt) || mediaAlt(featured) || mediaAlt(metaImage) || title,
     },
     body: composeArticleBody(mapBlocks(doc.body), doc.content),

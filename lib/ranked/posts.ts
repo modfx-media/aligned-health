@@ -1,3 +1,4 @@
+import { publicMediaUrl } from '@/lib/cms/media-url'
 import { getRankedContentDetail, listRankedContent } from './client'
 import { ensureUniqueCoverImages, committedCoverAlt, getRankedCoverImage } from './cover'
 import { fetchGoogleDocHtml } from './google-doc'
@@ -100,22 +101,26 @@ export async function getLiveRankedBlogPosts(
       const { source, html } = row
       if (localTitles.has(normalizeTitle(source.title))) continue
       const slug = uniqueSlug(source.title, source.id, taken)
+      const ownCover = publicMediaUrl(source.featured_image_url)
+      if (ownCover) reservedCovers.add(ownCover)
       const post = htmlToBlogPost({
         title: source.title,
         html,
         description: source.description,
         publishDate: publishDateFromRanked(source.scheduled_date, source.created_at),
         slug,
-        coverImage: null,
+        coverImage: ownCover,
       })
       if (!post) continue
-      post.coverImage = await getRankedCoverImage({
-        contentId: source.id,
-        title: source.title,
-        slug,
-        generate: Boolean(opts.generateCovers) || opts.generateForSlug === slug,
-        reservedUrls: reservedCovers,
-      })
+      if (!ownCover) {
+        post.coverImage = await getRankedCoverImage({
+          contentId: source.id,
+          title: source.title,
+          slug,
+          generate: Boolean(opts.generateCovers) || opts.generateForSlug === slug,
+          reservedUrls: reservedCovers,
+        })
+      }
       post.coverAlt = committedCoverAlt(slug) ?? `${source.title} cover`
       posts.push(post)
       taken.add(slug)

@@ -1,6 +1,8 @@
 import type { BlogBlock, BlogPost } from '@/lib/blog'
 import { getAllPosts } from '@/lib/blog'
+import { isSharedDefaultCover } from '@/lib/cms/media-url'
 import { getPublishedCmsPosts, mergePostsBySlug } from '@/lib/cms/posts'
+import { isPublishDateLive } from '@/lib/publish-date'
 import { getPublishedBlogPosts } from './posts'
 import type { BlogPostData } from './types'
 
@@ -113,21 +115,28 @@ export async function getPublishedSitePosts(): Promise<BlogPost[]> {
   const rankedAndLocal = published.map((data) => {
     const original = localBySlug.get(data.slug)
     if (original) {
+      const rankedCoverIsReal = !isSharedDefaultCover(data.coverImage)
+      const originalCoverIsReal = !isSharedDefaultCover(original.hero.src)
       return {
         ...original,
         datePublished: data.publishDate,
-        hero: {
-          ...original.hero,
-          src: data.coverImage,
-          alt: original.hero.alt || data.coverAlt,
-        },
+        hero:
+          originalCoverIsReal || !rankedCoverIsReal
+            ? original.hero
+            : {
+                ...original.hero,
+                src: data.coverImage,
+                alt: original.hero.alt || data.coverAlt,
+              },
       }
     }
     return rankedPostToSitePost(data)
   })
 
   const cms = await getPublishedCmsPosts()
-  return mergePostsBySlug(rankedAndLocal, cms)
+  return mergePostsBySlug(rankedAndLocal, cms).filter((post) =>
+    isPublishDateLive(post.datePublished),
+  )
 }
 
 export async function getPublishedSitePost(slug: string): Promise<BlogPost | undefined> {

@@ -1,4 +1,5 @@
 import { DEFAULT_COVER, DEFAULT_COVER_ALT, DEFAULT_CTA } from './config'
+import { isPublishDateLive, scheduledCalendarDate } from '@/lib/publish-date'
 import type { BlogPostData } from './types'
 
 function decodeEntities(text: string): string {
@@ -168,64 +169,38 @@ export function isRankedPostLive(
   now = new Date(),
 ): boolean {
   const s = status.trim().toLowerCase()
-  if (s === 'revising' || s === 'cancelled' || s === 'canceled') return false
-  if (!scheduledDate) return true
-  const day = scheduledDate.slice(0, 10)
-  const today = now.toLocaleDateString('en-CA', { timeZone: 'America/New_York' })
-  return day <= today
+  if (
+    s === 'revising' ||
+    s === 'cancelled' ||
+    s === 'canceled' ||
+    s === 'draft' ||
+    s === 'needs approval'
+  ) {
+    return false
+  }
+  // A scheduled item with no date is not live yet. Published items without a date stay up.
+  if (!scheduledDate) return s !== 'scheduled'
+  return isPublishDateLive(scheduledDate, now)
 }
 
 export function publishDateFromRanked(scheduledDate: string | null, fallback: string): string {
-  if (scheduledDate) return scheduledDate.slice(0, 10)
-  return fallback.slice(0, 10)
+  return (
+    scheduledCalendarDate(scheduledDate) ??
+    scheduledCalendarDate(fallback) ??
+    fallback.slice(0, 10)
+  )
 }
 
-export function todayInNewYork(now = new Date()): string {
-  return now.toLocaleDateString('en-CA', { timeZone: 'America/New_York' })
+export function nextUniquePublishDate(preferred: string): string {
+  return scheduledCalendarDate(preferred) ?? preferred.slice(0, 10)
 }
 
-export function addIsoDays(isoDate: string, days: number): string {
-  const [year, month, day] = isoDate.slice(0, 10).split('-').map(Number)
-  const next = new Date(Date.UTC(year, month - 1, day + days))
-  return next.toISOString().slice(0, 10)
-}
-
-export function nextUniquePublishDate(
-  preferred: string,
-  occupied: Set<string>,
-  today = todayInNewYork(),
-): string {
-  let date = preferred.slice(0, 10)
-  if (!occupied.has(date)) return date
-
-  let forward = date
-  while (forward < today) {
-    forward = addIsoDays(forward, 1)
-    if (!occupied.has(forward) && forward <= today) return forward
-  }
-
-  let back = preferred.slice(0, 10)
-  while (occupied.has(back)) back = addIsoDays(back, -1)
-  return back
-}
-
-/** No two posts share a publishDate. Keep original dates when they are free. */
+/** Keep each post on its real scheduled calendar date. Do not move a future date backward. */
 export function ensureUniquePublishDates<T extends { slug: string; publishDate: string }>(
   posts: T[],
-  today = todayInNewYork(),
 ): T[] {
-  const occupied = new Set<string>()
-  const sorted = [...posts].sort(
-    (a, b) => a.publishDate.localeCompare(b.publishDate) || a.slug.localeCompare(b.slug),
-  )
-  const remapped = new Map<string, string>()
-  for (const post of sorted) {
-    const unique = nextUniquePublishDate(post.publishDate, occupied, today)
-    occupied.add(unique)
-    remapped.set(post.slug, unique)
-  }
   return posts.map((post) => {
-    const date = remapped.get(post.slug)
-    return date && date !== post.publishDate ? { ...post, publishDate: date } : post
+    const date = scheduledCalendarDate(post.publishDate) ?? post.publishDate.slice(0, 10)
+    return date === post.publishDate ? post : { ...post, publishDate: date }
   })
 }

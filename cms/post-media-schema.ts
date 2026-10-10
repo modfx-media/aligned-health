@@ -11,6 +11,9 @@ const STATEMENTS = [
   `ALTER TABLE "posts" ADD COLUMN IF NOT EXISTS "content" jsonb`,
   `ALTER TABLE "_posts_v" ADD COLUMN IF NOT EXISTS "version_featured_image_id" integer`,
   `ALTER TABLE "_posts_v" ADD COLUMN IF NOT EXISTS "version_content" jsonb`,
+  // Cloud storage persists this on media. Production does not run drizzle push,
+  // so a missing column makes every media read fail and article images never resolve.
+  `ALTER TABLE "media" ADD COLUMN IF NOT EXISTS "_objectkey" varchar`,
 ] as const;
 
 export async function ensurePostMediaColumns(payload: Payload): Promise<void> {

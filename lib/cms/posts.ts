@@ -1,4 +1,6 @@
 import type { BlogPost } from "@/lib/blog";
+import { isPublishDateLive } from "@/lib/publish-date";
+import { isSharedDefaultCover } from "./media-url";
 import { getCMS } from "./payload";
 import { mapPost } from "./mappers";
 import { withCMS } from "./safe";
@@ -12,7 +14,17 @@ export function mergePostsBySlug(
     if (post.slug) bySlug.set(post.slug, post);
   }
   for (const post of cms) {
-    if (post.slug) bySlug.set(post.slug, post);
+    if (!post.slug) continue;
+    const previous = bySlug.get(post.slug);
+    if (
+      previous &&
+      isSharedDefaultCover(post.hero.src) &&
+      !isSharedDefaultCover(previous.hero.src)
+    ) {
+      bySlug.set(post.slug, { ...post, hero: previous.hero });
+      continue;
+    }
+    bySlug.set(post.slug, post);
   }
   return [...bySlug.values()].sort((a, b) =>
     b.datePublished.localeCompare(a.datePublished),
@@ -38,6 +50,9 @@ export async function getPublishedCmsPosts(): Promise<BlogPost[]> {
 
     return result.docs
       .map((doc) => mapPost(doc as unknown as Record<string, unknown>))
-      .filter((post) => post.slug && post.title);
+      .filter(
+        (post) =>
+          post.slug && post.title && isPublishDateLive(post.datePublished),
+      );
   }, []);
 }
