@@ -3,7 +3,7 @@ import { CMSRoute } from "@/lib/cms/CMSRoute";
 import { DesignedBlogIndexPage } from "@/lib/cms/designed-pages";
 import { metadataForPath } from "@/lib/cms/metadata";
 
-export const revalidate = 3600;
+export const revalidate = 300;
 
 const PATH = "/blog";
 const TITLE = "The Aligned Health Journal · Chiropractic Insights in Laguna Hills";
