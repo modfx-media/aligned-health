@@ -3,6 +3,8 @@ import { CMSRoute } from "@/lib/cms/CMSRoute";
 import { DesignedSitemapPage } from "@/lib/cms/designed-pages";
 import { metadataForPath } from "@/lib/cms/metadata";
 
+
+export const revalidate = 300;
 const PATH = "/sitemap";
 const TITLE = "Sitemap · Aligned Health";
 const DESCRIPTION =

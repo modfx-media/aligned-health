@@ -21,6 +21,7 @@ import { ensurePostMediaColumns } from "./cms/post-media-schema";
 import { livePreviewBreakpoints } from "./lib/cms/preview";
 import { getCorsOrigins, getPublicServerURL } from "./lib/cms/url";
 
+import { scheduledPublishPlugin } from "./scheduled-publish";
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
@@ -60,6 +61,7 @@ export default buildConfig({
     outputFile: path.resolve(dirname, "payload-types.ts"),
   },
   plugins: [
+    scheduledPublishPlugin(),
     seoPlugin({
       collections: ["pages", "posts", "services", "locations", "service-areas"],
       uploadsCollection: "media",

@@ -13,7 +13,7 @@ import {
   getPublishedSitePosts,
 } from "@/lib/ranked/site-posts";
 
-export const revalidate = 3600;
+export const revalidate = 300;
 export const dynamicParams = true;
 
 interface PageProps {

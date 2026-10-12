@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-export const revalidate = 3600;
+export const revalidate = 300;
 import { querySitemapFlags } from "@/lib/cms/query";
 import { ROUTES, SITE_URL } from "@/lib/site";
 import { getPublishedSitePosts } from "@/lib/ranked/site-posts";
