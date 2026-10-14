@@ -134,7 +134,16 @@ export async function getPublishedSitePosts(): Promise<BlogPost[]> {
   })
 
   const cms = await getPublishedCmsPosts()
-  return mergePostsBySlug(rankedAndLocal, cms).filter((post) =>
+  // A Ranked/local copy of an article that is also published in the CMS under
+  // a different slug is the same article: keep only the CMS version.
+  const titleKey = (title: string) =>
+    title.toLowerCase().replace(/&amp;/g, '&').replace(/[^a-z0-9]+/g, ' ').trim()
+  const cmsSlugs = new Set(cms.map((post) => post.slug))
+  const cmsTitles = new Set(cms.map((post) => titleKey(post.title)).filter(Boolean))
+  const fallback = rankedAndLocal.filter(
+    (post) => cmsSlugs.has(post.slug) || !cmsTitles.has(titleKey(post.title)),
+  )
+  return mergePostsBySlug(fallback, cms).filter((post) =>
     isPublishDateLive(post.datePublished),
   )
 }
