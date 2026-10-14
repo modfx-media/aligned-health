@@ -10,6 +10,9 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "images.squarespace-cdn.com" },
       { protocol: "https", hostname: "picsum.photos" },
       { protocol: "https", hostname: "images.unsplash.com" },
+      // Payload media route (Blob-backed uploads from /admin).
+      { protocol: "https", hostname: "alignedhealthoc.com", pathname: "/api/media/file/**" },
+      { protocol: "https", hostname: "www.alignedhealthoc.com", pathname: "/api/media/file/**" },
       { protocol: "https", hostname: "*.public.blob.vercel-storage.com" },
       { protocol: "https", hostname: "**.public.blob.vercel-storage.com" },
     ],
