@@ -10,12 +10,13 @@ export function isSharedDefaultCover(src: string | null | undefined): boolean {
   );
 }
 
-function isLocalMediaPath(pathname: string): boolean {
-  return (
-    pathname.startsWith("/media/") ||
-    pathname === "/media" ||
-    pathname.startsWith("/api/media")
-  );
+/**
+ * Files stored under /media (local disk) are not available on Vercel.
+ * /api/media/file/... is Payload's public media route and serves Blob (and
+ * local) files correctly, so those paths stay.
+ */
+function isUnavailableLocalMedia(pathname: string): boolean {
+  return pathname.startsWith("/media/") || pathname === "/media";
 }
 
 /**
@@ -31,13 +32,13 @@ export function publicMediaUrl(value: unknown): string | null {
     if (url.startsWith("https://") || url.startsWith("http://")) {
       try {
         const parsed = new URL(url);
-        if (isLocalMediaPath(parsed.pathname)) return null;
+        if (isUnavailableLocalMedia(parsed.pathname)) return null;
       } catch {
         return url;
       }
       return url;
     }
-    if (isLocalMediaPath(url)) return null;
+    if (isUnavailableLocalMedia(url)) return null;
     if (url.startsWith("/")) return url;
     return null;
   }
