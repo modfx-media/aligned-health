@@ -48,7 +48,6 @@ const DOCTORS: readonly Doctor[] = [
  bio: "Raised in the Midwest as a three-sport athlete, hockey, football, and baseball, Dr. Dustin earned his B.S. in Human Biology & Chemistry from Minnesota State University, then his Doctor of Chiropractic from Southern California University of Health Sciences. Eleven years in, he combines percussion, active/passive muscle therapy, and soft-tissue work to treat sport and non-sport injuries alike.",
  techniques: [
  "Diversified Adjusting",
- "Activator",
  "Drop Table",
  "Y-Strap Distraction",
  "Graston",

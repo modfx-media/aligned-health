@@ -48,7 +48,6 @@ const DOCTORS: readonly Doctor[] = [
  "People respond to different tools. That is why he has more than one way in:",
  techniques: [
  "Diversified Adjusting",
- "Activator",
  "Drop Table",
  "Y-Strap Cervical Distraction",
  "Graston",
