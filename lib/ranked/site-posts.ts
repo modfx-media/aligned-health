@@ -2,7 +2,7 @@ import type { BlogBlock, BlogPost } from '@/lib/blog'
 import { getAllPosts } from '@/lib/blog'
 import { isSharedDefaultCover } from '@/lib/cms/media-url'
 import { getPublishedCmsPosts, mergePostsBySlug } from '@/lib/cms/posts'
-import { isPublishDateLive } from '@/lib/publish-date'
+import { isPublishDateLive, spaceWeeklyPublishDates } from '@/lib/publish-date'
 import { getPublishedBlogPosts } from './posts'
 import type { BlogPostData } from './types'
 
@@ -143,9 +143,10 @@ export async function getPublishedSitePosts(): Promise<BlogPost[]> {
   const fallback = rankedAndLocal.filter(
     (post) => cmsSlugs.has(post.slug) || !cmsTitles.has(titleKey(post.title)),
   )
-  return mergePostsBySlug(fallback, cms).filter((post) =>
+  const live = mergePostsBySlug(fallback, cms).filter((post) =>
     isPublishDateLive(post.datePublished),
   )
+  return spaceWeeklyPublishDates(live)
 }
 
 export async function getPublishedSitePost(slug: string): Promise<BlogPost | undefined> {

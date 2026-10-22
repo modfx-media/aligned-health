@@ -46,6 +46,55 @@ export function scheduledCalendarDate(
   return formatZonedDate(new Date(parsed), NEW_YORK);
 }
 
+/** Newest card on the journal. Older posts step back by one week from here. */
+export const BLOG_LATEST_DATE = "2026-10-20";
+export const BLOG_PUBLISH_GAP_DAYS = 7;
+
+/** Add calendar days to a YYYY-MM-DD date without timezone drift. */
+export function addCalendarDays(isoDate: string, days: number): string {
+  const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(isoDate);
+  if (!match) return isoDate;
+  const utc = new Date(
+    Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3])),
+  );
+  utc.setUTCDate(utc.getUTCDate() + days);
+  return utc.toISOString().slice(0, 10);
+}
+
+/**
+ * Keep journal dates one week apart.
+ * The newest live post is dated `latest` (20 Oct 2026) unless a newer
+ * real date is already live, in which case that later date leads the list.
+ */
+export function spaceWeeklyPublishDates<
+  T extends { datePublished: string; dateModified?: string },
+>(
+  posts: readonly T[],
+  options?: { latest?: string; today?: string; gapDays?: number },
+): T[] {
+  if (posts.length === 0) return [];
+  const latest = options?.latest ?? BLOG_LATEST_DATE;
+  const today = options?.today ?? todayInNewYork();
+  const gapDays = options?.gapDays ?? BLOG_PUBLISH_GAP_DAYS;
+  const sorted = [...posts].sort((a, b) =>
+    b.datePublished.localeCompare(a.datePublished),
+  );
+  const newestReal =
+    scheduledCalendarDate(sorted[0].datePublished) ??
+    sorted[0].datePublished.slice(0, 10);
+  let anchor = newestReal > latest ? newestReal : latest;
+  if (anchor > today) anchor = today;
+
+  return sorted.map((post, index) => {
+    const datePublished = addCalendarDays(anchor, -index * gapDays);
+    const dateModified =
+      post.dateModified && post.dateModified >= datePublished
+        ? post.dateModified
+        : datePublished;
+    return { ...post, datePublished, dateModified };
+  });
+}
+
 /** True when the post has no schedule, or its calendar date is today or earlier in New York. */
 export function isPublishDateLive(
   value: string | null | undefined,

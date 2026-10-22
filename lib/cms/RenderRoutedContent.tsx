@@ -81,12 +81,17 @@ export async function RenderRoutedContent({
     let post = mapPost(doc);
     const sitePosts = await getPublishedSitePosts().catch(() => []);
     const merged = sitePosts.find((item) => item.slug === post.slug);
-    if (
-      merged &&
-      isSharedDefaultCover(post.hero.src) &&
-      !isSharedDefaultCover(merged.hero.src)
-    ) {
-      post = { ...post, hero: merged.hero };
+    if (merged) {
+      post = {
+        ...post,
+        datePublished: merged.datePublished,
+        dateModified: merged.dateModified ?? post.dateModified,
+        hero:
+          isSharedDefaultCover(post.hero.src) &&
+          !isSharedDefaultCover(merged.hero.src)
+            ? merged.hero
+            : post.hero,
+      };
     }
     const others = sitePosts.filter((item) => item.slug !== post.slug);
     return <BlogPostDetailView post={post} related={others.slice(0, 3)} />;
